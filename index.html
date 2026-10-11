@@ -1,0 +1,2384 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="韓檢初級文法複習：分類瀏覽、逐句韓語朗讀、中文翻譯與漢字詞。">
+<link rel="icon" type="image/png" href="icon.png">
+<link rel="apple-touch-icon" href="icon.png">
+<title>韓檢初級文法</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="韓檢文法">
+<meta name="theme-color" content="#F4EFE6" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1E1915" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+TC:wght@400;500;700&display=swap">
+<style>
+/* Layout: one-column phone notebook — sticky header, fixed bottom tab bar, content max 560px.
+   Palette: oat-paper ground, cream cards, milk-tea / linen-grey surfaces, caramel accent, cocoa ink. */
+:root{
+  --bg:#F4EFE6;       /* 燕麥米 */
+  --card:#FBF8F3;     /* 卡片 */
+  --milk:#D9C4A9;     /* 奶茶 */
+  --linen:#CFC6B8;    /* 米灰 */
+  --caramel:#A0754F;  /* 焦糖棕 */
+  --ink:#4A3A2E;      /* 深咖啡 */
+  --muted:#7D6B5D;    /* 次要文字 */
+  --hl:#EBD9BF;       /* 文法重點底色 */
+  --line:#E4DACB;
+  --soft:#EFE6D8;
+  --cat1:#E3D2BB; --cat2:#DDD5C8; --cat3:#E8DCC6; --cat4:#D8C2A8;
+  --on-accent:#FBF8F3;
+  --bad:#A4553F;
+  --shadow:0 1px 2px rgba(74,58,46,.06),0 6px 18px rgba(74,58,46,.07);
+  --f-ko:'Noto Sans KR','Apple SD Gothic Neo','Malgun Gothic','Noto Sans TC',sans-serif;
+  --f-zh:'Noto Sans TC','PingFang TC','Microsoft JhengHei','Noto Sans KR',sans-serif;
+  --hdrh:56px; --navh:62px;
+  --r-lg:20px; --r-md:14px; --r-sm:10px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#1E1915; --card:#29221C; --milk:#6A5541; --linen:#4A4038; --caramel:#D4A67C; --ink:#EFE5D8; --muted:#B8A795;
+    --hl:#4E3C2B; --line:#3A3029; --soft:#322922; --cat1:#3B3027; --cat2:#35302B; --cat3:#3A3229; --cat4:#43342A;
+    --on-accent:#1E1915; --bad:#D98C74; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25); color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1E1915; --card:#29221C; --milk:#6A5541; --linen:#4A4038; --caramel:#D4A67C; --ink:#EFE5D8; --muted:#B8A795;
+  --hl:#4E3C2B; --line:#3A3029; --soft:#322922; --cat1:#3B3027; --cat2:#35302B; --cat3:#3A3229; --cat4:#43342A;
+  --on-accent:#1E1915; --bad:#D98C74; --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 18px rgba(0,0,0,.25); color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{background:var(--bg)}
+body{color:var(--ink);font-family:var(--f-zh);font-size:15px;line-height:1.6;-webkit-font-smoothing:antialiased;-webkit-tap-highlight-color:transparent}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+button:focus-visible,input:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--caramel);outline-offset:2px;border-radius:8px}
+.ko{font-family:var(--f-ko);word-break:keep-all;overflow-wrap:anywhere}
+svg{display:block}
+
+/* ---------- header ---------- */
+#hdr{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);border-bottom:1px solid transparent;transition:border-color .2s}
+#hdr.scrolled{border-bottom-color:var(--line)}
+.hdr-in{max-width:560px;margin:0 auto;padding-inline:16px;height:var(--hdrh);display:flex;align-items:center;gap:8px}
+.hdr-title{flex:1;min-width:0;font-weight:700;font-size:17px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hdr-sub{font-weight:500;color:var(--muted);font-size:13px;margin-left:6px}
+.icon-btn{width:40px;height:40px;border-radius:12px;display:grid;place-items:center;flex:none;color:var(--ink)}
+.icon-btn:active{background:var(--soft)}
+.icon-btn.on{color:var(--caramel)}
+
+/* ---------- main ---------- */
+main{max-width:560px;margin:0 auto;padding-inline:16px;padding-block:8px calc(var(--navh) + env(safe-area-inset-bottom,0px) + 28px)}
+
+/* ---------- bottom nav ---------- */
+#tabs{position:fixed;left:0;right:0;bottom:0;z-index:30;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs-in{max-width:560px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);height:var(--navh)}
+.tab{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;font-size:11.5px;color:var(--muted);letter-spacing:.04em}
+.tab svg{width:23px;height:23px}
+.tab.on{color:var(--caramel);font-weight:700}
+
+/* ---------- home ---------- */
+.hero{padding:10px 2px 18px}
+.eyebrow{font-size:12px;letter-spacing:.14em;color:var(--muted);font-weight:500}
+.hero h1{font-size:28px;line-height:1.25;margin:6px 0 2px;letter-spacing:.02em;text-wrap:balance}
+.hero .ko-sub{font-family:var(--f-ko);color:var(--muted);font-size:14px}
+.overall{margin-top:16px;background:var(--card);border-radius:var(--r-lg);padding:16px;box-shadow:var(--shadow);display:grid;gap:10px}
+.overall-row{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.big-num{font-size:26px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:.01em}
+.big-num small{font-size:14px;color:var(--muted);font-weight:500;margin-left:2px}
+.mini-stats{display:flex;gap:14px;color:var(--muted);font-size:13px}
+.mini-stats b{color:var(--ink);font-variant-numeric:tabular-nums}
+.bar{height:8px;border-radius:99px;background:var(--soft);overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--caramel);border-radius:99px;min-width:0;transition:width .4s}
+.resume{display:flex;align-items:center;gap:12px;width:100%;text-align:left;margin-top:12px;padding:12px 14px;border-radius:var(--r-md);border:1px dashed var(--linen);color:var(--muted);font-size:13.5px}
+.resume b{color:var(--ink);font-weight:500}
+.resume .ko{color:var(--ink);font-weight:700}
+.resume svg{margin-left:auto;flex:none;color:var(--caramel)}
+.sec-label{font-size:12.5px;letter-spacing:.12em;color:var(--muted);margin:26px 2px 10px;font-weight:500}
+.cats{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.cat{position:relative;text-align:left;border-radius:var(--r-lg);padding:16px 14px 14px;display:flex;flex-direction:column;gap:2px;min-height:150px;overflow:hidden}
+.cat:active{transform:scale(.985)}
+.cat .cat-ko{font-family:var(--f-ko);font-size:13px;color:var(--muted);letter-spacing:.06em}
+.cat .cat-zh{font-size:21px;font-weight:700;line-height:1.3}
+.cat .cat-count{font-size:12.5px;color:var(--muted);margin-top:auto;font-variant-numeric:tabular-nums}
+.cat .bar{margin-top:8px;background:rgba(255,255,255,.45)}
+:root[data-theme="dark"] .cat .bar{background:rgba(0,0,0,.25)}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .cat .bar{background:rgba(0,0,0,.25)}}
+.cat .glyph{position:absolute;right:-6px;top:-14px;font-family:var(--f-ko);font-weight:700;font-size:74px;line-height:1;opacity:.13;pointer-events:none}
+.pill{display:inline-block;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--card);color:var(--muted);letter-spacing:.04em;width:max-content}
+
+/* ---------- list ---------- */
+.list-head{padding:6px 2px 14px}
+.list-head h1{font-size:24px;margin:0;line-height:1.3}
+.list-head p{margin:2px 0 0;color:var(--muted);font-size:13.5px}
+.rows{display:grid;gap:8px}
+.row{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:12px;width:100%;text-align:left;background:var(--card);border-radius:var(--r-md);padding:12px 12px 12px 10px;box-shadow:0 1px 0 var(--line)}
+.row:active{background:var(--soft)}
+.row-main{min-width:0;display:flex;flex-direction:column}
+.row-title{font-size:16.5px;font-weight:700;line-height:1.4}
+.row-mean{font-size:12.5px;color:var(--muted);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.row-state{display:flex;gap:4px;color:var(--caramel)}
+.row-state svg{width:17px;height:17px}
+.row.pending .row-title{color:var(--muted);font-weight:500}
+.stamp{display:inline-flex;align-items:center;gap:3px;border:1.5px solid var(--ink);border-radius:4px;padding:1px 6px 1px 5px;font-size:11px;font-weight:700;line-height:1.3;letter-spacing:.02em;flex:none}
+.stamp b{font-size:15px;font-variant-numeric:tabular-nums;letter-spacing:0}
+.row .stamp{flex-direction:column;gap:0;padding:3px 0;width:42px;justify-content:center;border-color:var(--linen);color:var(--muted)}
+.row .stamp b{color:var(--ink);font-size:17px}
+.row.done .stamp{background:var(--hl);border-color:var(--milk)}
+
+/* ---------- detail ---------- */
+.g-head{padding:6px 2px 14px}
+.g-meta{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.chip{font-size:12px;padding:3px 10px;border-radius:99px;background:var(--milk);color:var(--ink);letter-spacing:.04em}
+.g-title{font-size:30px;line-height:1.3;margin:10px 0 4px;font-weight:700;text-wrap:balance}
+.g-meaning{margin:0;color:var(--muted);font-size:15px}
+.g-actions{display:flex;gap:8px;margin-top:14px;flex-wrap:wrap}
+.toggle{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:99px;border:1px solid var(--linen);font-size:13.5px;color:var(--muted);background:var(--card)}
+.toggle svg{width:16px;height:16px}
+.toggle.on{background:var(--caramel);border-color:var(--caramel);color:var(--on-accent)}
+.rule{display:flex;gap:10px;align-items:flex-start;background:var(--card);border-radius:var(--r-md);padding:12px 14px;margin-bottom:10px;font-size:14px;line-height:1.7}
+.rule-tag{flex:none;font-size:12px;font-weight:700;color:var(--on-accent);background:var(--ink);border-radius:4px;padding:1px 6px;margin-top:3px;letter-spacing:.08em}
+.rule-text{min-width:0;font-family:var(--f-ko)}
+.tipbox{border:1.5px dashed var(--linen);border-radius:var(--r-md);padding:12px 14px 10px;margin:10px 0;font-size:13.5px;line-height:1.75;position:relative}
+.tipbox .tip-tag{display:inline-block;font-weight:700;font-size:12px;color:var(--caramel);border:1.5px solid var(--caramel);border-radius:4px;padding:0 6px;margin-bottom:6px;letter-spacing:.04em}
+.tipbox ul{margin:0;padding-left:1.1em}
+.tipbox li{font-family:var(--f-ko)}
+.tipbox li::marker{color:var(--milk)}
+
+.toolbar{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdrh));z-index:15;background:var(--bg);margin-inline:-16px;padding:8px 16px 10px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.play-all{display:inline-flex;align-items:center;gap:6px;background:var(--caramel);color:var(--on-accent);border-radius:99px;padding:8px 14px 8px 11px;font-size:13.5px;font-weight:500}
+.play-all svg{width:18px;height:18px}
+.seg{display:inline-flex;background:var(--soft);border-radius:99px;padding:3px}
+.seg button{font-size:12.5px;padding:5px 10px;border-radius:99px;color:var(--muted)}
+.seg button.on{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 1px 2px rgba(74,58,46,.12)}
+.hide-zh{margin-left:auto;display:inline-flex;align-items:center;gap:6px;font-size:13px;color:var(--muted)}
+.switch{width:36px;height:22px;border-radius:99px;background:var(--linen);position:relative;transition:background .2s;flex:none}
+.switch::after{content:"";position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:var(--card);transition:transform .2s;box-shadow:0 1px 2px rgba(0,0,0,.15)}
+.hide-zh.on .switch{background:var(--caramel)}
+.hide-zh.on .switch::after{transform:translateX(14px)}
+
+.usage{margin-top:22px}
+.usage-h{display:flex;gap:10px;align-items:flex-start;margin:0 0 10px;font-size:15.5px;line-height:1.55;font-weight:700}
+.usage-h .num{flex:none;width:24px;height:24px;border-radius:50%;background:var(--ink);color:var(--bg);display:grid;place-items:center;font-size:13px;margin-top:1px;font-variant-numeric:tabular-nums}
+.usage-h .txt{min-width:0}
+.usage.cont{margin-top:12px}
+.usage.cont .usage-h{font-size:14px;color:var(--muted);font-weight:500;padding-left:34px}
+.exs{list-style:none;margin:0;padding:0;display:grid;gap:8px}
+.ex{background:var(--card);border-radius:var(--r-md);padding:12px 8px 12px 14px;display:grid;grid-template-columns:1fr auto;gap:2px 6px;border:1.5px solid transparent;transition:border-color .2s,background .2s;scroll-margin-top:calc(var(--hdrh) + 70px)}
+.ex-body{min-width:0;cursor:default}
+.ex-ko{font-size:19px;line-height:1.7;font-weight:500;margin:0}
+.ex-zh{margin:2px 0 0;color:var(--muted);font-size:14.5px;line-height:1.6}
+.ex-hj{display:flex;flex-wrap:wrap;gap:4px 6px;margin-top:6px}
+.hj{font-size:12px;line-height:1.4;padding:2px 7px;border-radius:6px;background:var(--soft);color:var(--muted);white-space:nowrap}
+.hj .w{font-family:var(--f-ko);margin-right:4px}
+.hj .c{color:var(--ink);font-weight:500}
+.ex-note{font-size:12px;color:var(--muted);margin-top:4px}
+.ex-note::before{content:"補充";font-size:10.5px;border:1px solid var(--linen);border-radius:3px;padding:0 4px;margin-right:6px}
+.ex.bad{background:var(--soft)}
+.ex.bad .ex-ko{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--bad);text-decoration-thickness:1.5px}
+.ex.bad mark.hl{background:none;text-decoration:line-through;text-decoration-color:var(--bad)}
+.bad-tag{display:inline-block;font-size:11.5px;font-weight:700;color:var(--bad);border:1.5px solid var(--bad);border-radius:4px;padding:0 6px;margin-bottom:4px;letter-spacing:.04em}
+.peek{display:none;margin-top:4px;font-size:12.5px;color:var(--caramel);letter-spacing:.04em}
+.hidezh .ex:not(.revealed) .ex-zh,.hidezh .ex:not(.revealed) .ex-hj,.hidezh .ex:not(.revealed) .ex-note{display:none}
+.hidezh .ex:not(.revealed) .peek{display:block}
+.hidezh .ex-body{cursor:pointer}
+.say{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:var(--caramel);background:var(--soft);align-self:start;flex:none}
+.say svg{width:20px;height:20px}
+.say:active{transform:scale(.94)}
+.ex.speaking{border-color:var(--caramel);background:var(--card)}
+.ex.speaking .say{background:var(--caramel);color:var(--on-accent)}
+.ex.flash{animation:flash 1.6s ease}
+@keyframes flash{0%,40%{background:var(--hl)}100%{background:var(--card)}}
+mark.hl{background:linear-gradient(transparent 58%,var(--hl) 58%);color:inherit;text-decoration:underline;text-decoration-color:var(--caramel);text-decoration-thickness:2px;text-underline-offset:5px;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:0 1px}
+.pending-note{margin-top:14px;background:var(--card);border-radius:var(--r-lg);padding:22px 18px;text-align:center;color:var(--muted);font-size:14px;line-height:1.7}
+.pending-note .big{font-size:32px;font-family:var(--f-ko);color:var(--milk);font-weight:700;display:block;margin-bottom:4px}
+.g-foot{margin-top:28px;display:grid;gap:10px}
+.done-btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:14px;border-radius:var(--r-md);border:1.5px solid var(--caramel);color:var(--caramel);font-weight:700;font-size:15px}
+.done-btn.on{background:var(--caramel);color:var(--on-accent)}
+.pn{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pn button{background:var(--card);border-radius:var(--r-md);padding:10px 12px;text-align:left;display:flex;flex-direction:column;gap:0;min-width:0}
+.pn button:last-child{text-align:right;align-items:flex-end}
+.pn small{color:var(--muted);font-size:12px}
+.pn .ko{font-weight:700;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.pn button[disabled]{visibility:hidden}
+
+.voice-hint{background:var(--hl);border-radius:var(--r-md);padding:12px 14px;margin:12px 0 0;font-size:13.5px;line-height:1.7}
+.voice-hint summary{cursor:pointer;font-weight:700}
+.voice-hint ol{margin:6px 0 0;padding-left:1.2em}
+
+/* ---------- search ---------- */
+.search-box{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--hdrh));z-index:15;background:var(--bg);margin-inline:-16px;padding:4px 16px 10px}
+.search-field{display:flex;align-items:center;gap:8px;background:var(--card);border:1.5px solid var(--line);border-radius:99px;padding:0 14px;height:46px}
+.search-field:focus-within{border-color:var(--caramel)}
+.search-field>svg{color:var(--muted);flex:none;width:20px;height:20px}
+.search-field input{flex:1;min-width:0;border:0;background:transparent;font:inherit;font-size:16px;color:var(--ink);outline:none}
+.search-field input::placeholder{color:var(--muted);opacity:.8}
+.clear-q{color:var(--muted);width:28px;height:28px;display:grid;place-items:center;border-radius:50%}
+.suggest{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+.suggest button{background:var(--card);border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13.5px}
+.res-h{font-size:12.5px;letter-spacing:.1em;color:var(--muted);margin:18px 2px 8px;font-weight:500}
+.hit{display:block;width:100%;text-align:left;background:var(--card);border-radius:var(--r-md);padding:12px 14px;margin-bottom:8px}
+.hit .ko{font-size:16.5px;line-height:1.6}
+.hit .zh{color:var(--muted);font-size:13.5px}
+.hit .from{font-size:11.5px;color:var(--caramel);margin-top:4px;letter-spacing:.03em}
+.hit .from .ko{font-size:inherit;line-height:inherit}
+mark.q{background:var(--milk);color:inherit;border-radius:3px;padding:0 1px}
+.empty{color:var(--muted);text-align:center;padding:36px 12px;font-size:14px;line-height:1.8}
+
+/* ---------- fav ---------- */
+.segwide{display:grid;grid-template-columns:1fr 1fr;background:var(--soft);border-radius:99px;padding:4px;margin:6px 0 14px}
+.segwide button{padding:8px;border-radius:99px;font-size:14px;color:var(--muted)}
+.segwide button.on{background:var(--card);color:var(--ink);font-weight:700;box-shadow:0 1px 2px rgba(74,58,46,.12)}
+.row .row-cat{font-size:11px;color:var(--caramel);letter-spacing:.04em}
+
+/* ---------- review ---------- */
+.scope{display:flex;gap:8px;flex-wrap:wrap;margin:6px 0 14px}
+.scope button{border:1px solid var(--linen);border-radius:99px;padding:6px 12px;font-size:13.5px;color:var(--muted);background:var(--card)}
+.scope button.on{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+.scope button[disabled]{opacity:.45;cursor:not-allowed}
+.flash-card{position:relative;background:var(--card);border-radius:24px;box-shadow:var(--shadow);padding:24px 20px 20px;min-height:340px;display:flex;flex-direction:column;cursor:pointer;border-left:6px solid var(--milk)}
+.fc-top{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.fc-count{font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;letter-spacing:.06em}
+.fc-ko{font-size:24px;line-height:1.7;font-weight:500;margin:22px 0 0}
+.fc-back{margin-top:auto;padding-top:16px;border-top:1.5px dashed var(--linen);display:grid;gap:8px}
+.fc-zh{font-size:16px;line-height:1.6}
+.fc-g{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.fc-g .ko{color:var(--ink);font-weight:700;font-size:15px}
+.fc-usage{font-size:12.5px;color:var(--muted);line-height:1.6}
+.fc-hint{margin-top:auto;text-align:center;color:var(--caramel);font-size:13px;letter-spacing:.06em;padding-top:18px}
+.flash-card:not(.flipped) .fc-back{display:none}
+.flash-card.flipped .fc-hint{display:none}
+.flash-card.flipped .fc-back{animation:rise .35s ease}
+@keyframes rise{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.fc-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+.btn{display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:var(--r-md);font-weight:700;font-size:15px}
+.btn.primary{background:var(--caramel);color:var(--on-accent)}
+.btn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+.btn svg{width:18px;height:18px}
+
+.toast{position:fixed;left:50%;bottom:calc(var(--navh) + env(safe-area-inset-bottom,0px) + 14px);transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:9px 16px;border-radius:99px;font-size:13.5px;z-index:40;max-width:calc(100% - 32px);text-align:center;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+@media (min-width:430px){.cats{gap:14px}.cat{min-height:160px}}
+
+/* standalone page reset */
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px)}
+body{margin:0}
+img{max-width:100%}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header id="hdr"><div class="hdr-in" id="hdrIn"></div></header>
+<main id="view"></main>
+<nav id="tabs" aria-label="主選單"><div class="tabs-in" id="tabsIn"></div></nav>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+function E(ko,hl,zh,hj,note){return {ko:ko,hl:hl?hl.split('|'):[],zh:zh,hj:hj?hj.split(',').map(function(s){var i=s.indexOf(':');return [s.slice(0,i),s.slice(i+1)]}):[],note:note||''}}
+function W(){var e=E.apply(null,arguments);e.bad=true;return e}
+// 助詞 조사 01–19 — transcribed from PDF pages 3–19 (book p.130–146)
+// E(ko, highlights "a|b", zh, hanja "word:漢字,word:漢字")
+const PARTICLE = [
+{
+  no:'01', title:'이 / 가', meaning:'主格助詞；用言助詞',
+  tip:'이：前面名詞有尾音　가：前面名詞無尾音',
+  usages:[
+    {label:'主格助詞：強調主詞，主要行為者', ex:[
+      E('엄마가 저를 안고 병원으로 달려갔다.','엄마가','媽媽抱著我奔跑去醫院。','병원:病院'),
+      E('내가 바로 한국말을 할 줄 아는 대만인이다.','내가','會講韓文的台灣人就是我。','한국:韓國,대만인:臺灣人'),
+      E('제가 커피를 사 올게요.','제가','我去買咖啡。',''),
+    ], tips:[
+      '저가 (X) → 제가 (O)　我',
+      '나가 (X) → 내가 (O)　我',
+      '너가 (X) → 네가 (O)　你',
+      '누구가 (X) → 누가 (O)　誰',
+      'A：누가 그랬어요?　是誰弄的？　B：제가 한 거예요.　是我弄的啦。',
+    ]},
+    {label:'께서：用於格式體', ex:[
+      E('어머님께서는, 자주 가족들에게 빵을 만들어 주십니다.','어머님께서는','婆婆常作麵包給家人吃。','가족:家族'),
+      E('사장님께서는 오늘도 저희와 같이 야근하십니다.','사장님께서는','老闆今天也跟我們一起加班。','사장:社長,야근:夜勤'),
+      E('할아버지께서는 수술 후 몸이 많이 편찮으세요.','할아버지께서는','爺爺開刀後身體很虛弱。','수술:手術,후:後'),
+      E('슈퍼마켓 아주머니께서는 항상 저를 보고 미소를 지어요.','아주머니께서는','超市大嬸總是對著我微笑。','항상:恆常,미소:微笑'),
+    ]},
+    {label:'名詞（이／가）＋形容詞', ex:[
+      E('배가 아파요.','배가','肚子痛。',''),
+      E('허벅지가 아파요.','허벅지가','大腿好痛。',''),
+      E('눈이 아파요.','눈이','眼睛好痛。',''),
+      E('이가 아파요.','이가','牙齒好痛。',''),
+      E('마음이 아파요.','마음이','心好痛。',''),
+      E('꽃이 피었다.','꽃이','花開了。',''),
+      E('누나가 참 예뻐요.','누나가','姊姊很漂亮。',''),
+      E('오후에는 길이 항상 복잡해요.','길이','下午時路總是很塞。','오후:午後,항상:恆常,복잡:複雜'),
+    ]},
+  ],
+},
+{
+  no:'02', title:'은 / 는', meaning:'補助助詞',
+  tip:'은：前面名詞有尾音；는：前面名詞無尾音',
+  usages:[
+    {label:'主格助詞用法', ex:[
+      E('안녕하세요. 처음 뵙겠습니다. 저는 대만 사람입니다.','저는','初次見面，你好。我是台灣人。','안녕:安寧,대만:臺灣'),
+      E('저는 가족들과 같이 오랜만에 식사를 했어요.','저는','今天難得跟家人一起用餐。','가족:家族,식사:食事'),
+      E('우리집 강아지는 정말 귀여워.','우리집 강아지는','我家狗真的太可愛了。',''),
+      E('오월에 대만의 날씨는 덥고 비가 자주 온다.','대만의 날씨는','五月台灣的天氣又熱又常下雨。','오월:五月,대만:臺灣'),
+    ]},
+    {label:'強調用法', ex:[
+      E('일요일에는 꼭 교회에 간다.','일요일에는','星期日一定去教會。','일요일:日曜日,교회:教會'),
+      E('엄마랑은 출근도 같이 가고 퇴근도 같이 해요.','엄마랑은','跟媽媽一起上班、一起下班。','출근:出勤,퇴근:退勤'),
+      E('서울에서는 맛있는 음식을 먹을 수 있다.','서울에서는','在首爾可以吃到很多美食。','음식:飲食'),
+    ]},
+    {label:'對比用法', ex:[
+      E('대만은 덥지만 호주는 추워요.','대만은|호주는','台灣很熱但澳洲很冷。','대만:臺灣,호주:濠洲'),
+      E('오늘 사과는 별로예요. 다른 것을 사세요.','사과는','今天蘋果不怎麼樣，買別的吧。','사과:沙果,별로:別로'),
+      E('방청객들의 생각은 어떤가요?','생각은','觀眾覺得如何呢？','방청객:傍聽客'),
+      E('이번 리포트는 참 잘 쓴 거 같아요.','리포트는','這次的報告寫得很好。',''),
+    ]},
+  ],
+},
+{
+  no:'03', title:'을 / 를', meaning:'目的格助詞',
+  tip:'을：加在有尾音名詞後；를：加在無尾音名詞後',
+  usages:[
+    {label:'名詞（受詞）을／를＋動詞語幹', ex:[
+      E('나는 매일 운동을 한다.','운동을','我每天運動。','매일:每日,운동:運動'),
+      E('잠을 잘 자서 기분이 좋아요.','잠을','睡得好所以心情很好。','기분:氣分'),
+      E('식사를 하고 길거리를 구경해요.','식사를|길거리를','吃完逛逛街吧。','식사:食事'),
+      E('저는 제 일을 아주 많이 좋아해요.','제 일을','我好愛我的工作。',''),
+      E('한국을 사랑하는 외국인이에요.','한국을','我是愛韓國的外國人。','한국:韓國,외국인:外國人'),
+    ]},
+    {label:'을、를與좋아하다／싫어하다使用，所有的名詞皆為受詞', ex:[
+      E('저는 새벽 한 시를 좋아해요.','한 시를','我喜歡凌晨一點。','시:時'),
+      E('주말을 좋아해요.','주말을','喜歡週末。','주말:週末'),
+    ]},
+  ],
+},
+{
+  no:'04', title:'에', meaning:'時間、地點助詞',
+  tip:'',
+  usages:[
+    {label:'時間助詞：在此時間點有所行為或是敘述時使用', ex:[
+      E('한 시에 약속 장소에서 만나기로 했다.','한 시에','約好一點在約好的地方見面。','시:時,약속:約束,장소:場所'),
+      E('올해 여름에 한국에 꼭 갈 거예요.','올해 여름에','今年夏天我一定要去韓國。','한국:韓國'),
+      E('이번 어머니 생신에 어떤 선물을 준비하셨어요?','어머니 생신에','這次媽媽的生日準備了什麼禮物？','생신:生辰,선물:膳物,준비:準備'),
+      E('오늘보다 내일이 더 추워요.','내일이','比起今天，明天會更冷。','내일:來日'),
+      E('모레는 학교에 일찍 가야 돼요.','모레는','後天我要早點去學校。','학교:學校'),
+    ], tips:[
+      '在最後一個時間點加上「에」此助詞即可。올해에 여름에 (X) → 올해 여름에 (O)　今年夏天',
+      '但有些時間不需加此助詞，例如：그저께（前天）、어제（昨天）、오늘（今天）、내일（明天）、모레（後天）。',
+    ]},
+    {label:'地點助詞：「에」前面的名詞為目的地，常與移動動詞搭配使用，或與少數的形容詞連用。', ex:[
+      E('내년에는 꼭 서울에 가고 싶어요.','서울에','我明年真的很想去韓國。','내년:來年'),
+      E('그들은 오늘도 도서관에 올까요?','도서관에','他們今天也會來圖書館嗎？','도서관:圖書館'),
+      E('너무 힘들어요. 위에 올라가고 싶지 않아요.','위에','好累喔。我不想上去。',''),
+    ], tips:[
+      '常用移動動詞：가다（去）、오다（來）、들어가다（進去）、들어오다（進來）、올라가다（上去）、올라오다（上來）、내려가다（下去）、내려오다（下來）',
+    ]},
+    {label:'地點助詞＋形容詞', cont:true, ex:[
+      E('오늘도 집에 없어요?','집에','今天也不在家嗎？',''),
+      E('오늘도 집에 안 계세요?','집에','今天也不在家嗎？',''),
+      E('세일 기간이라 백화점에 사람이 많아요.','백화점에','折扣期間，百貨公司人好多。','기간:期間,백화점:百貨店'),
+      E('손님, 여기에 앉으시겠어요?','여기에','客人，要坐這裡嗎？',''),
+    ], tips:[
+      '形容詞：있다（在）、없다（不在）、계시다（在的格式體）、많다（多）、앉다（坐）',
+    ]},
+    {label:'에：「給」，接受的角色。用於無情名詞（花、草、場所等）', ex:[
+      E('꽃에 물을 주려고 해요.','꽃에','打算給花澆水。',''),
+      E('학부모가 학교에 전화했어요?','학교에','家長有打電話去學校嗎？','학부모:學父母,학교:學校,전화:電話'),
+      E('공장에 물건 보냈어요.','공장에','把東西寄去工廠了。','공장:工場,물건:物件'),
+    ]},
+    {label:'對……：名詞需為無情名詞（身體部位）', ex:[
+      E('몸에 좋아요.','몸에','對身體好。',''),
+      E('가까이서 보면 눈에 나쁘니까 뒤로 앉아.','눈에','看太近對眼睛不好，坐後面一點。',''),
+      E('술을 많이 마시면 간에 안 좋아요.','간에','喝太多酒對肝不好。','간:肝'),
+    ]},
+  ],
+},
+{
+  no:'05', title:'(으)로', meaning:'往、工具',
+  tip:'으로：前面名詞有尾音；로：前面名詞無尾音',
+  tips:[
+    '(으)로與尾音「ㄹ」連用時，「으」消失：서울으로 (X) → 서울로 (O)；칼으로 (X) → 칼로 (O)',
+  ],
+  usages:[
+    {label:'往：有前往之意。相義詞「에」', ex:[
+      E('기사 아저씨, 부산으로 가 주세요.','부산으로','司機大叔，麻煩你開往釜山。','기사:技士,부산:釜山'),
+      E('서울로 가는 차가 맞지요?','서울로','這是開往首爾的車對吧？','차:車'),
+      E('아래로 내려와.','아래로','下來。',''),
+    ]},
+    {label:'用：有工具、方法之意', ex:[
+      E('김치를 칼로 썰까요?','칼로','要用刀切泡菜嗎？',''),
+      E('한국어로 천천히 말해 보세요.','한국어로','請用韓文慢慢說。','한국어:韓國語'),
+      E('가위로 머리를 잘라야지요!','가위로','要用剪刀剪頭髮呀！',''),
+      E('엉덩이로 자기의 이름을 썼다.','엉덩이로','用屁股寫自己的名字。','자기:自己'),
+    ]},
+  ],
+},
+{
+  no:'06', title:'에서', meaning:'在、從（起點）',
+  tip:'',
+  usages:[
+    {label:'在：敘述在此地點進行行為時使用', ex:[
+      E('길거리에서 담배 피우지 마세요.','길거리에서','不要在街道抽菸。',''),
+      E('이번에는 캐나다에서 영어를 배울 거야.','캐나다에서','這次打算在加拿大學英文。','영어:英語'),
+      E('이봐요! 여기에서 뭐하시는 거예요?','여기에서','喂！你在這裡做什麼？',''),
+    ]},
+    {label:'從：名詞에서＋移動動詞', ex:[
+      E('선생님은 중국에서 오셨습니다.','중국에서','老師來自中國。','선생:先生,중국:中國'),
+      E('여기에서 저기까지 길이가 얼마나 돼요?','여기에서','這裡到那裡長度是多少？',''),
+      E('분식집에서 미술학원까지 뛰어갔어요.','분식집에서','從小吃店用跑的去美術補習班。','분식:粉食,미술:美術,학원:學院'),
+      E('안녕~ 난 대만에서 왔어!','대만에서','你好～我來自台灣！','안녕:安寧,대만:臺灣'),
+      E('어디에서 나온거야?','어디에서','從哪裡出來的？',''),
+      E('계단에서 내려오는데 나도 모르게 넘어졌어요.','계단에서','下樓梯時，不小心跌倒了。','계단:階段'),
+    ], tips:[
+      '移動動詞：오다（來）、들어오다（進來）、내려오다（下來）、올라오다（上來）、나오다（出來）',
+    ]},
+  ],
+},
+{
+  no:'07', title:'의', meaning:'的，發音：/에/',
+  tip:'',
+  usages:[
+    {label:'所有格：的', ex:[
+      E('저는 선배의 남동생과 절친입니다.','선배의','我跟學長（姐）的弟弟是好朋友。','선배:先輩,절친:切親'),
+      E('제 고모를 아세요?','제','認識我姑姑嗎？','고모:姑母'),
+      E('내 필통하고 공책 좀 찾아 줘.','내','幫忙找我的鉛筆盒跟筆記本。','필통:筆筒,공책:空冊'),
+    ], tips:[
+      '縮寫：저의 = 제　我的（格式體）',
+      '나의 = 내　我的',
+      '너의 = 네　你的',
+    ]},
+  ],
+},
+{
+  no:'08', title:'에게 / 한테', meaning:'限於有情名詞（人、動物）',
+  tip:'',
+  usages:[
+    {label:'受格助詞，接受的角色：「給」', ex:[
+      E('제 여자친구에게 선물을 준 사람이 누구예요?','제 여자친구에게','送禮物給我女友的人是誰？','여자:女子,친구:親舊,선물:膳物'),
+      E('(저에게) 그 책 좀 갖다주시겠어요?','저에게','可以把那本書拿給我嗎？','책:冊'),
+    ]},
+    {label:'對某人……', ex:[
+      E('너한테 맞다고 다른 사람에게도 맞는 것은 아니야.','너한테|다른 사람에게도','適合你並不代表也適合別人。',''),
+      E('나이 드신 분에게 좋은 약이에요.','나이 드신 분에게','這藥對上年紀的人很好。','약:藥'),
+      E('약혼자에게 나쁜 일이 생긴 거 같아.','약혼자에게','未婚夫好像發生不好的事情了。','약혼자:約婚者'),
+    ]},
+    {label:'께：格式體（需搭配有情名詞）', ex:[
+      E('첫 월급을 타면 부모님께 내복을 사 드릴 거예요.','부모님께','領到的第一份薪水，打算買衛生衣送給父母親。','월급:月給,부모:父母,내복:內服'),
+      E('할머니께 물 좀 갖다 드리세요.','할머니께','把水拿給奶奶。',''),
+    ]},
+  ],
+},
+{
+  no:'09', title:'도', meaning:'也',
+  tip:'',
+  usages:[
+    {label:'接在主詞後面使用', ex:[
+      E('저도 언어 학원에서 한국어를 배우고 있어요.','저도','我也在語言補習班學韓文。','언어:言語,학원:學院,한국어:韓國語'),
+      E('봄도 좋고 여름도 좋아요.','봄도|여름도','春天跟夏天都喜歡。',''),
+    ]},
+    {label:'加在受詞後面使用', ex:[
+      E('고구마하고 감자도 먹는군요.','감자도','也吃地瓜跟馬鈴薯啊。',''),
+      E('밥도 먹고 영화도 볼 수 있을까요?','밥도|영화도','可以又吃飯又看電影嗎？','영화:映畫'),
+    ]},
+    {label:'連……', ex:[
+      E('엄마도 김밥을 먹고 싶다고 했다.','엄마도','連媽媽也說想吃壽司。',''),
+      E('인기가 많아서 프랑스 사람도 알아 봤어요.','프랑스 사람도','他紅到連法國人也認得他。','인기:人氣'),
+    ]},
+    {label:'은／는；이／가；을／를與其他助詞連用時，省略', ex:[], tips:[
+      '저는도 (X) → 저도 (O)',
+      '감자를도 (X) → 감자도 (O)',
+      '봄이도 (X) → 봄도 (O)',
+    ]},
+    {label:'出現在某些副詞後面，有強調之意', ex:[
+      E('아직도 안 가고 있었어요?','아직도','你還沒去啊！',''),
+      E('정말 많이도 먹네요!','많이도','吃得還真多啊！',''),
+      E('저는 오늘도 수산물 시장에 가려고 해요.','오늘도','我打算今天也去海產市場。','수산물:水産物,시장:市場'),
+      E('언니, 참 늦게도 자네요!','늦게도','姊，你還真晚睡啊！',''),
+    ]},
+    {label:'與其他助詞連用：께서、에、에서、에게、까지、와／과', ex:[
+      E('아침에도 꼭 토스트를 먹어야 해요.','아침에도','早上也一定要吃土司。',''),
+      E('왜 그 분은 다른 나라에서도 한식을 찾지요?','나라에서도','那位為什麼在國外也要吃韓式料理呢？','한식:韓食'),
+      E('부하 직원에게도 추석 선물 세트를 보냈어요.','부하 직원에게도','也有送下屬中秋禮品。','부하:部下,직원:職員,추석:秋夕,선물:膳物'),
+      E('너까지도 그 일에 참여했다니.','너까지도','竟然連你也參與了那件事情。','참여:參與'),
+    ]},
+  ],
+},
+{
+  no:'10', title:'하고、와 / 과、(이)랑', meaning:'和、跟',
+  tip:'와：前面名詞無尾音；과：前面名詞有尾音\n이랑：前面名詞有尾音；랑：前面名詞無尾音',
+  usages:[
+    {label:'和、跟', ex:[
+      E('지우개하고 연필이 없어졌어요.','지우개하고','橡皮擦跟鉛筆不見了。','연필:鉛筆'),
+      E('선풍기와 텔레비전은 거실에 있어요.','선풍기와','電風扇跟電視在客廳。','선풍기:扇風機,거실:居室'),
+      E('친구랑 이번 여름 방학 때 배낭여행 갈까 해요.','친구랑','這次暑假打算跟朋友當背包客。','친구:親舊,방학:放學,배낭:背囊,여행:旅行'),
+      E('회사 동료와는 그냥 일하는 관계예요.','회사 동료와는','跟同事只是工作上的關係。','회사:會社,동료:同僚,관계:關係'),
+    ]},
+  ],
+},
+{
+  no:'11', title:'보다、만큼、처럼 (같이)', meaning:'比起、相當於、像（宛如）',
+  tip:'名詞＋이/가＋名詞 보다（더）＋形容詞',
+  usages:[
+    {label:'比起（보다）、相當於（만큼）、像（처럼）', ex:[
+      E('형이 동생보다 키가 훨씬 더 커요.','동생보다','哥哥比弟弟高很多。','형:兄,동생:同生'),
+      E('한국만큼 일본을 좋아해요.','한국만큼','喜歡日本的程度相當於韓國。','한국:韓國,일본:日本'),
+      E('인형처럼 화장해 주세요.','인형처럼','請幫我畫得像洋娃娃。','인형:人形,화장:化粧'),
+      E('이 길이 저 길보다 덜 막혀요.','길보다','這條路比起那條路較不塞。',''),
+      E('나를 얼마만큼 사랑해?','얼마만큼','你有多愛我？',''),
+    ]},
+  ],
+},
+{
+  no:'12', title:'만', meaning:'只、只有',
+  tip:'',
+  usages:[
+    {label:'意指唯一：只、只有', ex:[
+      E('미술관에만 가면 배가 아파요.','미술관에만','只要去美術館肚子就痛。','미술관:美術館'),
+      E('공원에서만 쉬고 싶으니까 먼저 들어가세요.','공원에서만','我只想待在公園休息，您先回去吧。','공원:公園'),
+      E('하루 종일 양식만 먹어서 속이 느끼해요.','양식만','整天吃西餐好油膩喔。','종일:終日,양식:洋食'),
+      E('식구들에게만 이 소식을 전하고 싶어요.','식구들에게만','我只想跟家人分享這消息。','식구:食口,소식:消息,전하다:傳하다'),
+      E('먹고 싶은 것만 먹어서 몸이 약하죠.','것만','只吃想吃的（偏食）所以身體弱。','약하다:弱하다'),
+      E('너만 알아.','너만','只有你知道。',''),
+      E('아버지는 여동생만 예뻐해요.','여동생만','父親只疼愛妹妹。','여동생:女同生'),
+    ]},
+    {label:'有限制之意，最小化。與「딱 한 …、번、병」搭配使用，意指只要一次就好、只要一瓶就好等等，與數字和單位連用', ex:[
+      E('딱 한 번만 빌려 주라.','딱 한 번만','一次就好，借給我啦。','번:番'),
+      E('마지막으로 딱 한 잔만 하자.','딱 한 잔만','最後，再喝一杯就好。','잔:盞'),
+      E('영국에 딱 한 번만 가자.','딱 한 번만','只去一次英國就好。','영국:英國,번:番'),
+    ]},
+    {label:'與「… 만 못하다」搭配使用：不如……', ex:[
+      E('아들이 아버지만 못하네요.','아버지만 못하네요','兒子不如爸爸呀。',''),
+      E('축구만큼은 독일만 못해요.','독일만 못해요','足球這一領域不如德國。','축구:蹴球,독일:獨逸'),
+      E('이 회사는 역시 저 회사만 못해요.','회사만 못해요','這公司果然不如那公司。','회사:會社,역시:亦是'),
+    ]},
+    {label:'肯定前面的狀況，而後句為對立，與「다、더니 …」連用', rule:'動詞／形容詞＋만＋主詞', ex:[
+      E('감사합니다만 이제 그만 찾아 오세요.','감사합니다만','謝謝你，但是不要再來找我了。','감사:感謝'),
+      E('옷이 비싸다만 품질과 디자인은 최고예요.','비싸다만','衣服雖貴，但品質跟設計堪稱第一。','품질:品質,최고:最高'),
+    ]},
+    {label:'與「미안하다、고맙다、실례하다」連用，有慣用、謙虛之意', rule:'감사하다＋만＋主詞', ex:[
+      E('실례합니다만 여기 화장실 좀 빌릴 수 있을까요?','실례합니다만','不好意思，可以借一下洗手間嗎？','실례:失禮,화장실:化粧室'),
+      E('미안합니다만 물 좀 갖다주시겠습니까?','미안합니다만','不好意思，可以幫我拿杯水嗎？','미안:未安'),
+    ]},
+  ],
+},
+{
+  no:'13', title:'밖에', meaning:'除了……之外都不（能）……。近義詞：「만」',
+  tip:'밖에＋안／못＋動詞／形容詞\n名詞＋밖에＋없다（除了……都沒有）',
+  usages:[
+    {label:'除了……之外都不（能）……', ex:[
+      E('한국 음식 중에 떡볶이밖에 안 좋아해요. = 떡볶이만 좋아해요.','떡볶이밖에','韓國菜當中除了辣炒年糕我都不愛。','한국:韓國,음식:飲食,중:中'),
+      E('입이 까다로워서 이 식당밖에 못 가요. = 이 식당만 가요.','식당밖에','嘴很挑，所以只能去這家餐廳。','식당:食堂'),
+      E('지금 집에 고양이밖에 없어요.','고양이밖에','家裡除了貓誰都不在。','지금:只今'),
+      E('내 마음속에 너밖에 없어.','너밖에','我心裡只有你。',''),
+      E('아까는 한 사람밖에 없었는데 지금은 만원이에요.','한 사람밖에','剛才只有一個人，現在人爆滿。','지금:只今,만원:滿員'),
+    ]},
+  ],
+},
+{
+  no:'14', title:'마다', meaning:'每',
+  tip:'',
+  usages:[
+    {label:'每', ex:[
+      E('사람마다 입맛이 달라요.','사람마다','每個人的口味都不同。',''),
+      E('날마다 (매일) 한국어 단어를 외워요.','날마다','每天背韓文單字。','매일:每日,한국어:韓國語,단어:單語'),
+      E('아기는 울 때마다 콧물을 흘려요.','울 때마다','嬰兒只要哭就流鼻涕。',''),
+    ]},
+  ],
+},
+{
+  no:'15', title:'부터', meaning:'從、開始（起點）',
+  tip:'',
+  usages:[
+    {label:'從、開始（起點）', ex:[
+      E('수업은 아침 여덟시부터 시작하니까 어서 일어나요.','아침 여덟시부터','課從八點開始，所以請快起床。','수업:授業,시:時,시작:始作'),
+      E('이 학생부터 읽어 볼까요?','이 학생부터','從這學生開始念念看吧？','학생:學生'),
+      E('수학을 잘하니까 수학부터 공부합시다.','수학부터','你的數學很厲害，那我們就從數學開始念起。','수학:數學,공부:工夫'),
+      E('이제부터 다시는 술을 안 마실 거야.','이제부터','從這一刻起我再也不喝酒。',''),
+    ]},
+  ],
+},
+{
+  no:'16', title:'까지', meaning:'常與「에서」、「부터」搭配使用',
+  tip:'',
+  usages:[
+    {label:'到（為止）', ex:[
+      E('오늘 수업은 여기까지 하겠습니다.','여기까지','今天就上到這裡。','수업:授業'),
+      E('두 시까지 와 줄 수 있어요?','두 시까지','你可以兩點到嗎？','시:時'),
+      E('처음부터 끝까지 다 들었어요.','끝까지','從頭聽到尾。',''),
+      E('집에서 편의점까지 얼마나 걸려요?','편의점까지','從家到便利商店要多久？','편의점:便宜店'),
+      E('저녁에서 영화까지 보여 주셔서 감사합니다.','영화까지','從晚餐到電影，謝謝你的招待。','영화:映畫,감사:感謝'),
+    ]},
+    {label:'連……', ex:[
+      E('이제는 남편까지 아내의 말을 안 믿겠지요!','남편까지','現在連老公也不相信太太了吧！','남편:男便'),
+      E('심한 감기에 걸려서 죽까지 다 토했어요.','죽까지','感冒太嚴重，連粥都吐光光了。','심하다:甚하다,감기:感氣,죽:粥,토하다:吐하다'),
+      E('경찰까지 날 배신하다니...','경찰까지','連警察也出賣我……','경찰:警察,배신:背信'),
+      E('면접을 위해서 화장하고 정장까지 차려 입었어요.','정장까지','為了面試，還化了妝、穿上套裝。','면접:面接,위하다:為하다,화장:化粧,정장:正裝'),
+    ]},
+    {label:'… 끝까지：……到底；到最後', ex:[
+      E('끝까지 손을 놓지 않았어요.','끝까지','到最後都沒有鬆手。',''),
+      E('머리에서 발끝까지 소름이 돋았어요.','발끝까지','從頭到腳起雞皮疙瘩。',''),
+      E('머리끝까지 화가 치밀었어요.','머리끝까지','怒火中燒。','화:火'),
+    ]},
+    {label:'極限、意外的狀況', ex:[
+      E('박사 학위까지 땄는데 이걸 몰라요?','박사 학위까지','擁有博士學位的人連這也不知道？','박사:博士,학위:學位'),
+      E('그렇게까지 했어야 했어요?','그렇게까지','你非得要那樣做不可嗎？',''),
+    ]},
+    {label:'「까지」、「마저」、「조차」之比較', rule:'「마저」、「조차」用在極端的狀況，而「까지」沒有限制', ex:[
+      E('교수님은 요리까지도 잘합니다.','요리까지도','教授連做菜也很厲害。','교수:教授,요리:料理'),
+      E('공부도 못하고 성격조차/성격마저/성격까지도 안 좋아요.','성격조차/성격마저/성격까지도','他功課差，連個性也不好。','공부:工夫,성격:性格'),
+    ]},
+  ],
+},
+{
+  no:'17', title:'(이)나', meaning:'或；（強調數量）竟達……之多',
+  tip:'이나：前面名詞有尾音；나：前面名詞無尾音',
+  usages:[
+    {label:'或', ex:[
+      E('블랙 커피나 홍차 주세요.','블랙 커피나','請給我黑咖啡或是紅茶。','홍차:紅茶'),
+      E('시간이 있을 때 한국 드라마나 예능 프로를 자주 봐요.','한국 드라마나','有空時我經常看韓劇或是韓國綜藝節目。','시간:時間,한국:韓國,예능:藝能'),
+    ]},
+    {label:'超過以往習慣的量或次數時使用，強調數量，用在數字單位之後', ex:[
+      E('넘 맛이 있어서 냉면을 두 그릇이나 먹었어요.','두 그릇이나','太好吃了，所以涼麵吃了兩碗之多。','냉면:冷麵'),
+      E('초조해서 껌을 10개나 씹어서 턱이 아파요.','10개나','因為焦慮吃了十顆口香糖，結果下巴好痠。','초조:焦燥,개:個'),
+    ]},
+      // (continued) usage 2 of 17
+    {label:'', cont:true, ex:[
+      E('평상시에 안 마시던 커피를 오늘 한잔이나 마셨어요.','한잔이나','今天竟然喝了一杯，平常連碰都不碰的咖啡。','평상시:平常時,잔:盞'),
+    ]},
+    {label:'不是首選，而是第二選項', ex:[
+      E('시간이 남았으니까 영화나 봐요.','영화나','有多出時間，那就看個電影吧。','시간:時間,영화:映畫'),
+      E('날씨가 좋으니까 시냇가에나 갈까?','시냇가에나','天氣好，那就去溪邊如何？',''),
+      E('몸이 좀 피곤해요. 그냥 집에서 잠이나 잘래요.','잠이나','有點累，我要在家睡大覺。','피곤:疲困'),
+    ]},
+    {label:'大約數量', ex:[
+      E('어제 몇 사람이나 등록했어요?','몇 사람이나','昨天報名人數大約幾人？','등록:登錄'),
+      E('오늘 몇 도나 돼요?','몇 도나','今天大約幾度？','도:度'),
+    ]},
+    {label:'與疑問名詞搭配使用。同義詞：(이)든지', ex:[
+      E('누구나 다 할 수 있는 운동인데 해 볼래요?','누구나','這運動誰都能做，你要試試看嗎？','운동:運動'),
+      E('어디에서나 흔히 살 수 있는 제품이야.','어디에서나','這產品到處都在賣。','제품:製品','흔히　普遍'),
+      E('무엇이나 다 잘 먹습니다.','무엇이나','我什麼都吃。',''),
+      E('얼마나 바빠요?','얼마나','你要多忙？',''),
+    ], tips:[
+      '누구나 = 누구든지　不管是誰',
+      '어디나 = 어디든지　不管是哪裡',
+      '무엇이나 = 무엇이든지　不管是什麼',
+      '언제나 = 언제든지　不管何時',
+      '얼마나　多（少）→ 얼마든지　不管多少',
+    ]},
+  ],
+},
+{
+  no:'18', title:'정도 / 쯤', meaning:'大約、大概',
+  tip:'',
+  usages:[
+    {label:'大約、大概', ex:[
+      E('얼마 정도를 생각하고 있어요?','얼마 정도','心中想的金額是多少？','정도:程度'),
+      E('11시쯤에 서울역에서 만나요.','11시쯤','大約十一點在首爾火車站見。','시:時,역:驛'),
+      E('이 정도면 될 거 같아요.','이 정도','大概這樣就夠了。','정도:程度'),
+      E('이 정도 가지고는 택도 없죠.','이 정도','這點可差得遠了。','정도:程度'),
+    ]},
+  ],
+},
+{
+  no:'19', title:'(이)란', meaning:'所謂的……',
+  tip:'',
+  usages:[
+    {label:'所謂的……', ex:[
+      E('인생이란 뭘까요?','인생이란','所謂的人生是什麼呢？','인생:人生'),
+      E('엄마란 직업은 참 위대한 것 같아요.','엄마란','所謂媽媽這職業好偉大。','직업:職業,위대:偉大'),
+      E('너란 사람은 정말 피하고 싶다.','너란','你這人，我想躲得遠遠地。','피하다:避하다'),
+    ]},
+  ],
+},
+];
+
+// 否定詞 부정어 01–04 — PDF pages 20–24 (book p.147–151). W() = sentence the book marks as wrong (X)
+const NEGATION = [
+{
+  no:'01', title:'名詞＋이 / 가 아니다 (아니에요)', meaning:'不是',
+  tip:'이：前面名詞有尾音；가：前面名詞無尾音',
+  usages:[
+    {label:'不是', ex:[
+      E('여기는 아프리카가 아니야.','아프리카가 아니야','這裡不是非洲。',''),
+      E('여자가 아니라서 잘 모르겠어요.','여자가 아니','我不是女人，所以不太了解。','여자:女子'),
+      E('그 여자 분은 저희 엄마가 아니에요.','저희 엄마가 아니에요','那位女士不是我們的母親。','여자:女子'),
+    ]},
+  ],
+  tips:['以下為限於動詞（동사）／形容詞（형용사）使用的否定詞，與모르다、없다等本身含有否定意味的否定詞連用時，意思會有所不同。'],
+},
+{
+  no:'02', title:'안… ＝ …지 않다', meaning:'不、沒有',
+  tip:'',
+  usages:[
+    {label:'縮寫：안＋形容詞／動詞', ex:[
+      E('내년에는 절대로 해외여행 안 갈 거예요.','안 갈 거예요','明年絕不去國外旅行。','내년:來年,절대:絕對,해외:海外,여행:旅行'),
+      E('안 가고 뭐 해요?','안 가','你不走嗎？',''),
+      E('저는 고백을 안 했습니다.','안 했습니다','我沒有告白。','고백:告白'),
+      E('그 여자가수 별로 안 예뻐요.','안 예뻐요','那女歌手不怎麼漂亮。','여자:女子,가수:歌手,별로:別로'),
+    ]},
+    {label:'完整：形容詞／動詞＋지 않다', ex:[
+      E('다음 날에도 저를 만나고 싶지 않다고 들었어요.','싶지 않다','我聽說他隔天也不想見我。',''),
+      E('다리를 다쳐서 오전 수업에 가지 않았어요.','가지 않았어요','因為傷到腿，所以沒有去上午的課。','오전:午前,수업:授業'),
+      E('다시 돌려 주지 않겠어.','주지 않겠어','我不會再還給你。',''),
+    ]},
+    {label:'否定＋疑問句：反問法', rule:'…지 않다?：不……嗎？；…지 않았다?：沒有……嗎？', ex:[
+      E('집에 아직도 안 갔어요?','안 갔어요','你還沒回家嗎？',''),
+      E('아까 밥 먹지 않았어요?','먹지 않았어요','（你剛剛沒有吃嗎？）你剛剛不是吃過了嗎？',''),
+      E('내일 안 살 거예요?','안 살 거예요','你明天不活嗎？（意指：只活在當下嗎？）','내일:來日'),
+    ]},
+  ],
+},
+{
+  no:'03', title:'못… / …지 못하다', meaning:'不能、沒能、不會',
+  tip:'縮寫：못＋動詞；完整：動詞＋지 못하다',
+  usages:[
+    {label:'與主語的意志無關，或是沒有能力達到時使用', ex:[
+      E('비가 엄청 내려서 오늘도 운동하러 못 가요.','못 가요','雨下太大，所以今天也不能去運動。','운동:運動'),
+      E('시험 문제가 어려워서 다 풀지 못했어요.','풀지 못했어요','考試題目太難，所以沒能全作答。','시험:試驗,문제:問題'),
+      E('힘이 없어서 밥도 먹지 못하겠어요.','먹지 못하겠어요','無力到連飯都沒辦法吃。',''),
+      E('중국어는 하지만 스페인어는 못해요.','못해요','會說中文，但不會說西班牙語。','중국어:中國語'),
+      E('술을 마셔서 지금은 운전하지 못하겠어.','운전하지 못하겠어','喝了酒，所以現在沒辦法開車。','지금:只今,운전:運轉'),
+      E('저 원래 운전 못해요.','못해요','我原本就不會開車。','원래:元來,운전:運轉'),
+      E('저녁 회의를 하지 못한다고요?','하지 못한다고요','說是晚上不能開會？','회의:會議'),
+    ]},
+    {label:'與某些形容詞搭配使用，表示能力或是情況無法達到預期的情況', ex:[
+      E('넉넉하지 못하다','넉넉하지 못하다','不足',''),
+      E('넓지 못하다','넓지 못하다','不夠寬',''),
+      E('옳지 못하다','옳지 못하다','不對的（錯的）',''),
+      E('마음이 편하지 못하다','편하지 못하다','不放心','편하다:便하다'),
+      E('사정이 좋지 못하다','좋지 못하다','情況不好，狀況不好','사정:事情'),
+      E('돈이 넉넉하지 못해서 이것만 샀어요.','넉넉하지 못해서','錢不夠所以只買了這些。',''),
+      E('옳지 못한 일은 하는게 아니에요.','옳지 못한','不對的事情不該做。',''),
+      E('엄마에게 화를 내고 마음이 편하지 못해요.','편하지 못해요','跟媽媽生氣之後，心裡很不舒服。','화:火,편하다:便하다'),
+    ]},
+    {label:'使用限制①：不能與勸誘、命令型語尾或是被動詞使用', rule:'被動詞（피동사）：보이다（看到）、들리다（聽到）等……', ex:[], tips:[
+      '보이지 못하다 (X) → 보이지 않아요 (O)　看不到',
+      '들리지 못하다 (X) → 들리지 않아요 (O)　聽不到',
+    ]},
+    {label:'使用限制②：不能與有能力避免不幸狀況的動詞連用', ex:[
+      W('이번 회사는 망하지 못했다.','망하지 못했다','這次的公司沒能倒閉。','회사:會社'),
+      W('사돈을 걱정하지 못하다.','걱정하지 못하다','不能擔心親家。','사돈:査頓'),
+      E('사돈을 걱정하지 마세요.','걱정하지 마세요','不用擔心親家。','사돈:査頓'),
+    ], tips:[
+      '例如以下動詞：걱정하다（擔心）、고민하다（煩惱）、염려하다（擔憂）、후회하다（後悔）、실패하다（失敗）、실직하다（失職）、잃다（遺失）、망하다（倒閉）、굶주리다（挨餓）',
+    ]},
+    {label:'使用限制③：不能與表現意圖之語尾 (으)려고、고 싶다等連用', ex:[
+      W('먹지 못 하려고 해요.','먹지 못 하려고 해요','打算不能吃。',''),
+      W('영화를 보지 못하고 싶어요.','보지 못하고 싶어요','想不能看電影。','영화:映畫'),
+    ]},
+    {label:'使用限制④：與自然現象不連用', rule:'비가 오다（下雨）、눈이 내리다（下雪）、태풍이 있다（有颱風）等。', ex:[
+      W('비가 못 와요.','못 와요','沒有下雨',''),
+      E('비가 안 와요.','안 와요','沒有下雨',''),
+      W('겨울 내내 눈이 못 내렸어요.','못 내렸어요','整個冬天都沒有下雪',''),
+      E('겨울 내내 눈이 안 내렸어요.','안 내렸어요','整個冬天都沒有下雪',''),
+    ]},
+    {label:'比較：「지 않다」與「지 못하다」的不同之處', ex:[
+      E('다음 주에 학원에 안 가요.','안 가요','下週不去補習班。','주:週,학원:學院'),
+      E('다음 주에 학원에 못 가요.','못 가요','下週不能去補習班。','주:週,학원:學院'),
+    ], tips:[
+      '지 못하다：有意圖但不得已，或無法行之否定詞，有婉轉之意。',
+      '지 않다：是表達主語想法或所屬情況之中立的否定詞。',
+    ]},
+  ],
+},
+{
+  no:'04', title:'지 말다', meaning:'不要。「命令型」限制某人的行為。',
+  tip:'動詞＋지 말다（動詞＋지 마）',
+  usages:[
+    {label:'與命令、勸誘型語尾搭配使用', ex:[
+      E('박물관에서 사진 찍지 마세요.','찍지 마세요','請勿在博物館攝影。','박물관:博物館,사진:寫真'),
+      E('잔디를 밟지 마십시오.','밟지 마십시오','請勿踐踏草地。',''),
+      E('먹지도 말고 마시지도 말아.','먹지도 말고 마시지도 말아','不准吃也不准喝。',''),
+      E('밤에 너무 늦게 다니지 마.','다니지 마','不要太晚逗留在外面。',''),
+      E('걱정하지 마세요.','걱정하지 마세요','請不要擔心。',''),
+    ]},
+    {label:'使用限制：不能與部分疑問、敘述型語尾搭配使用', rule:'不能搭配的語尾：습니다、ㄹ 것이다、려고 하다、십니까？等', ex:[
+      W('걱정하지 맙니다.','지 맙니다','不要擔心。','','正確說法 → 걱정하지 마세요'),
+      W('사용하지 말 거예요.','지 말 거예요','打算不要使用。','사용:使用'),
+      W('주무시지 마려고 해요.','지 마려고 해요','打算不要睡覺。',''),
+      W('그러지 마십니까?','지 마십니까','不要這樣做嗎？',''),
+    ]},
+  ],
+},
+];
+
+// 連接詞尾 연결어미 01–23 — PDF pages 25–42 (book p.152–169)
+const CONNECTIVE = [
+{
+  no:'01', title:'名詞＋이다、아니다', meaning:'名詞的因為……所以',
+  tip:'(이)라서：前面名詞有尾音；라서：前面名詞無尾音',
+  usages:[
+    {label:'名詞＋(이)라서', cont:true, ex:[
+      E('내일은 주말이라서 집에서 청소할 거예요.','주말이라서','因為明天是週末，所以打算在家大掃除。','내일:來日,주말:週末,청소:清掃'),
+      E('언니라서 남동생에게 양보해요.','언니라서','因為我是姊姊，所以讓弟弟。','남동생:男同生,양보:讓步'),
+      E('바보라서 포기할 수 없어요.','바보라서','因為我是笨蛋，所以不能放棄。','포기:拋棄'),
+    ], tips:[
+      '(이)라서：前面的內容為後文之理由或原因。不能使用勸誘、命令型語尾。',
+      '「서」可省略，只使用 (이)라',
+      '물이 아니라 안 마셨어요.　因為不是水，所以沒有喝。',
+      '나는 학생이라 술을 마시면 안 돼요.　因為我是學生，所以不可以喝酒。',
+    ]},
+    {label:'名詞＋이어서／여서：前面的內容為後文之理由或原因。不能使用勸誘、命令型語尾', rule:'同義詞：(이)라서', ex:[
+      E('다음달이 내 생일이어서 국내 여행을 떠날겁니다.','생일이어서','下個月是我生日，打算在國內旅遊。','생일:生日,국내:國內,여행:旅行'),
+      E('세아이의 엄마여서 많이 피곤해 보여요.','엄마여서','因為是三個孩子的媽媽，所以看起來很疲憊。','피곤:疲困'),
+    ]},
+    {label:'名詞＋(이)니까：前面的內容為後文之理由或原因。可使用勸誘、命令型語尾', ex:[
+      E('사람이니까 자중해야 돼요.','사람이니까','因為是人所以要自重。','자중:自重'),
+      E('휴가 중이니까 일 얘기는 그만해요.','휴가 중이니까','在休假中，別再談公事了。','휴가:休假,중:中'),
+      E('바닷물이니까 당연히 짜지요.','바닷물이니까','因為是海水，所以當然鹹囉。','당연:當然'),
+    ]},
+    {label:'名詞＋때문에：因為……所以', rule:'表示原因、理由，不能使用勸誘、命令型語尾。因前面的狀況導致後文的情況有所改變或是受到牽連。', ex:[
+      E('오늘도 알람 때문에 지각했어요.','알람 때문에','今天也因為鬧鐘，所以遲到了。','지각:遲刻'),
+      E('일 때문에 모임에 못 갈 것 같아요.','일 때문에','因為工作應該不能參加聚會。',''),
+      E('빵 때문에 칠 키로나 쪘어요.','빵 때문에','因為麵包胖了七公斤。','칠:七'),
+    ]},
+  ],
+},
+{
+  no:'02', title:'거나', meaning:'或……；不管……',
+  tip:'動詞＋거나、動詞거나 動詞거나、動詞＋았거나（過去式）',
+  usages:[
+    {label:'二（或以上）選一。或……', ex:[
+      E('휴일에는 놀거나 자요.','놀거나','週末時玩或是睡覺。','휴일:休日'),
+      E('집에서 일하거나 청소해요.','일하거나','在家工作或是打掃。','청소:清掃'),
+      E('내일은 친구랑 게임하거나 운동하거나 공부할 거예요.','게임하거나|운동하거나','打算明天跟朋友玩電玩或是運動或是唸書。','내일:來日,친구:親舊,운동:運動,공부:工夫'),
+      E('많이 피곤해 보여요. 일했거나 운동했거나 했을 거예요.','일했거나|운동했거나','他看起來很累，應該是工作了或是有做運動。','피곤:疲困,운동:運動'),
+    ]},
+    {label:'動詞거나 動詞거나＋(하다)、動詞거나 말거나：包含所有的行為', ex:[
+      E('믿거나 말거나 상관 없어요.','믿거나 말거나','信不信由你，我無所謂。','상관:相關'),
+      E('비가 오거나 말거나 전 꼭 갈 거예요.','오거나 말거나','不管有沒有下雨，我一定會去。',''),
+      E('영화를 볼 때 울거나 웃거나 해요.','울거나 웃거나','看電影的時候，不是笑就是哭。','영화:映畫'),
+    ]},
+    {label:'與「누구、언제、무엇、어디、어떻게」疑問名詞搭配使用，表示無論狀況如何，都沒關係', ex:[
+      E('사장님이 누구를 만나거나 이젠 나랑 상관 없어요.','누구를 만나거나','無論老闆見誰都不關我的事。','사장:社長,상관:相關'),
+      E('어디에 가거나 잘 살아요.','어디에 가거나','不管去哪裡，要好好生活喔。',''),
+      E('어떻게 가거나 도착만 하면 돼요.','어떻게 가거나','不管用什麼方法去，只要能到就好。','도착:到着'),
+    ]},
+  ],
+},
+{
+  no:'03', title:'고 / 고 나서', meaning:'然後',
+  tip:'縮寫：形容詞／動詞 고…、動詞 고 나서…\n完整：主詞 그리고 主詞',
+  usages:[
+    {label:'單純表達兩種動作在時間上的前後關係', ex:[
+      E('그러지 마요. 드라마를 다 보고 마트에 같이 가요.','다 보고','別這樣，我們看完連續劇再去超市。',''),
+      E('올해는 한국에 가고 나서 일본으로 갈 거예요.','가고 나서','我打算今年先去韓國之後再去日本。','한국:韓國,일본:日本'),
+      E('우동을 먹고 볶음밥을 먹어야 해요.','먹고','要先吃烏龍麵再來吃炒飯。',''),
+      E('쌍둥이 언니가 먼저 태어나고 오 분 후에 내가 나왔어요.','태어나고','雙胞胎姊姊先出生，然後五分鐘後我也出生了。','쌍둥이:雙둥이,오:五,분:分,후:後'),
+      E('운동을 하고 나서 물은 꼭 마셔야 돼요.','하고 나서','運動完之後一定要喝水。','운동:運動'),
+    ]},
+    {label:'單純連接兩個句子，主詞有兩個', ex:[
+      E('곰은 동굴에서 자고 토끼는 깡충깡충 뜁니다.','자고','熊在山洞裡睡覺，兔子在外面蹦蹦跳跳。','동굴:洞窟'),
+      E('언니는 노래를 부르고 동생은 춤을 춰요.','부르고','姊姊唱歌，妹妹跳舞。','동생:同生'),
+      E('산은 아름답고 꽃은 예쁘군.','아름답고','山很優美、花很漂亮。','산:山'),
+      E('밖에는 비가 오고 내 마음은 답답하고.','오고','外面下著雨而我悶悶不樂。',''),
+    ]},
+    {label:'表示並列、對等', ex:[
+      E('날씨가 춥고 폭우가 내리고 있어요.','춥고','天氣冷而且還下著暴雨。','폭우:暴雨'),
+      E('그 여배우의 다리는 날씬하고 하얘요.','날씬하고','那位女演員的腿又細又白。','여배우:女俳優'),
+      E('오늘 엄마에게 식사도 대접하고 선물도 사 드릴거야.','대접하고','我今天要請媽媽吃飯還有送禮物。','식사:食事,대접:待接,선물:膳物'),
+    ]},
+  ],
+},
+{
+  no:'04', title:'전에', meaning:'之前。前面的名詞不能使用過去式，但語尾可以',
+  tip:'名詞＋전에；形容詞／動詞＋기 전에',
+  usages:[
+    {label:'之前', ex:[
+      E('그 전에 먼저 이것부터 해 주세요.','그 전에','在那之前請先幫我做這個。','전:前'),
+      E('저녁을 먹기 전에 손부터 씻으세요.','먹기 전에','吃晚餐之前請先洗手。','전:前'),
+      E('물건을 사기 전에 미리 돈을 인출했어요.','사기 전에','在購物之前我有先提款。','물건:物件,전:前,인출:引出'),
+    ]},
+  ],
+},
+{
+  no:'05', title:'후에', meaning:'之後',
+  tip:'名詞＋후에；形容詞／動詞＋ㄴ／은 후에',
+  usages:[
+    {label:'之後', ex:[
+      E('그 후에 무슨 일이 있었던 거예요?','그 후에','在那之後發生了什麼事？','후:後'),
+      E('다 함께 운동을 한 후에 시원한 맥주 마시자.','한 후에','一起運動完，喝冰涼的啤酒吧。','운동:運動,후:後,맥주:麥酒'),
+      E('집에 들어간 후에 열어 보세요.','들어간 후에','回到家之後請再打開。','후:後'),
+    ]},
+  ],
+},
+{
+  no:'06', title:'形容詞／動詞＋아서 / 어서 / 여서 (해서)', meaning:'因為……所以；（動作）之後',
+  tip:'아서：ㅏ、ㅗ\n어서：ㅓ、ㅜ、ㅠ、ㅡ、ㅣ、ㅔ、ㅟ…\n여서：하다',
+  usages:[
+    {label:'因為……所以。相近詞：느라고、으니까', rule:'不能與命令、勸誘、問句型語尾（세요、ㅂ시다、지요、ㄹ까요、십시오）搭配使用', ex:[
+      E('머리가 어지러워서 소파에 좀 누울게요.','어지러워서','頭好暈，我要躺在床上。',''),
+      E('어제 찬 물을 많이 마셔서 오늘 하루 종일 설사했어요.','마셔서','昨天喝太多冰水，今天拉了一整天。','종일:終日,설사:泄瀉'),
+      E('손이 너무 시려워서 더 이상 못 하겠는데.','시려워서','手太冰了，我做不下去了。','이상:以上'),
+      E('차가 많이 막혀서 또 지각할 것 같아요.','막혀서','因為塞車所以又要遲到了。','차:車,지각:遲刻'),
+    ]},
+    {label:'之後：時間上的前後順序或是延續後面的動作，前後主詞一致', ex:[
+      E('버스에서 내려서 전화 주세요.','내려서','請下車之後打給我。','전화:電話'),
+      E('친구를 만나서 점심을 먹을 거예요.','만나서','打算跟朋友見面一起吃午餐。','친구:親舊,점심:點心'),
+      E('얘들아~ 앉아서 주문할까?','앉아서','孩子們～坐下來點菜好嗎？','주문:注文'),
+      E('집에 가서 꼭 숙제해야 돼~','가서','回家之後一定要寫作業喔～','숙제:宿題'),
+      E('나는 중국에 가서 역사를 공부하려고 해요.','가서','我打算去中國念歷史。','중국:中國,역사:歷史,공부:工夫'),
+    ]},
+    {label:'但與穿戴型動詞連用時，請使用「고」此連接詞', ex:[
+      E('잠옷을 입고 잘거야.','잠옷을 입고','我要穿睡衣睡。',''),
+      E('햇빛이 강해서 모자를 쓰고 나가요.','모자를 쓰고','陽光太耀眼所以帶著帽子出門。','강하다:強하다,모자:帽子'),
+      E('양말을 신고 운동화를 신어야 발냄새가 안 나요.','양말을 신고','穿上襪子穿運動鞋才不會腳臭。','양말:洋襪,운동화:運動靴'),
+      E('안경을 쓰고 영화를 보세요.','안경을 쓰고','請戴著眼鏡看電影。','안경:眼鏡,영화:映畫'),
+      E('날씨가 추우니까 장갑을 끼고 물건을 옮기세요.','장갑을 끼고','天氣冷，請帶著手套搬運東西。','장갑:掌匣,물건:物件'),
+    ]},
+    {label:'與「죄송하다（抱歉）、미안하다（對不起）、반갑다（很高興）、고맙다（謝謝）」使用', rule:'動詞／形容詞＋아서／어서／여서 죄송하다…', ex:[
+      E('만나서 반가웠어요.','만나서','很高興認識你。',''),
+      E('오늘도 늦어서 죄송합니다.','늦어서','很抱歉今天也遲到了。','죄송:罪悚'),
+      E('시험을 넘 못 봐서 엄마한테 많이 미안해요.','못 봐서','因為考很差，所以很對不起媽媽。','시험:試驗,미안:未安'),
+    ]},
+    {label:'前面的時間為後續行為發生的時間點', ex:[
+      E('아빠는 날마다 자정이 지나서 집에 들어오세요.','자정이 지나서','爸爸每天過了午夜才回家。','자정:子正'),
+      E('그는 결혼 한 지 얼마 안 돼서 애기 아빠가 됐어요.','얼마 안 돼서','他結婚沒多久就當爸爸了。','결혼:結婚'),
+      E('아침이 돼서 열이 내렸습니다.','아침이 돼서','到了早上才燒退了。','열:熱'),
+    ]},
+  ],
+},
+{
+  no:'07', title:'形容詞／動詞＋(으)니까', meaning:'因為……所以；……之後發現',
+  tip:'으니까：前面詞有尾音；니까：前面詞無尾音',
+  usages:[
+    {label:'因為……所以。니까前面可使用過去式「았、었、였」與未來式「겠」。', ex:[
+      E('너도 했으니까 나도 할거야.','했으니까','你做了所以我也要做。',''),
+      E('일이 잘 끝났으니까 내가 한 턱 낼게.','끝났으니까','事情圓滿結束，所以我請客。',''),
+      E('오늘도 비가 오니까 장화를 신어.','오니까','今天也下雨，你就穿雨鞋吧。','장화:長靴'),
+      E('나 다이어트 해야 하니까 너도 먹지 마.','하니까','我要減肥，所以你也不准吃。',''),
+    ]},
+    {label:'……之後發現……。因前面的狀況，發現新的事實時使用。', ex:[
+      E('먹어 보니까 정말 꿀맛이었어요.','먹어 보니까','吃後才發現美味到不行。',''),
+      E('그 일을 해 보니까 정말 힘들었어요.','해 보니까','做了之後才發現那工作好累。',''),
+      E('그 사람과 일을 해 보니까 호흡이 척척 잘 맞아요.','일을 해 보니까','跟那個人工作後發現，我們默契十足。','호흡:呼吸'),
+    ]},
+    {label:'與알고 보니까（原來）、듣고 보니까（聽完之後）等慣用形態使用。', ex:[
+      E('알고 보니까 여친이 있었어요.','알고 보니까','原來他有女朋友。','여친:女親'),
+      E('듣고 보니까 일리가 있는 것 같아요.','듣고 보니까','聽完之後覺得很有道理。','일리:一理'),
+    ]},
+  ],
+},
+{
+  no:'08', title:'形容詞／動詞＋아도 / 어도 / 여도', meaning:'就算……、即使……；可以……',
+  tip:'',
+  usages:[
+    {label:'單純假設，就算……', ex:[
+      E('비싸도 살 거예요.','비싸도','就算貴我也要買。',''),
+      E('서운해도 저는 그 분을 도와 드릴 겁니다.','서운해도','即使你難過我也會幫助那位的。',''),
+      E('아무리 울어도 제 마음은 변하지 않아요.','울어도','就算哭，我也不會改變心意。','변하다:變하다'),
+      E('이젠 아무리 맞아도 아프지가 않아요.','맞아도','現在就算被打也不會痛了。',''),
+    ]},
+    {label:'前句為假設還未發生的情況，而後句與前句的情況相反，即使……', ex:[
+      E('비가 내려도 저는 학원에 가려고 해요.','내려도','即使下雨我也打算去補習班。','학원:學院'),
+      E('제가 틀렸다고 해도 인정하고 싶지 않아.','해도','即使是我錯了，我也不想承認。','인정:認定'),
+      E('그때 유학을 해도 지금 성공 못했을 거야.','해도','即使當時有去留學，現在也不會成功。','유학:留學,지금:只今,성공:成功'),
+    ]},
+    {label:'假設過去的狀況，如果當時……', ex:[
+      E('그때 그 사람과 결혼했어도 행복했을까?','결혼했어도','如果當時跟那個人結婚也會幸福嗎？','결혼:結婚,행복:幸福'),
+    ]},
+    {label:'假設最壞的打算，而後文使用否定詞', ex:[
+      E('아무리 가난해도 돈을 훔치면 안 돼요.','가난해도','就算貧窮，也不可以偷錢。',''),
+      E('목에 칼이 들어와도 난 말 못해.','들어와도','即使用刀威脅我，我也不說。',''),
+      E('난 죽었다 깨어나도 그 짓은 못해.','깨어나도','就算打死我也不做那件事情。',''),
+    ]},
+    {label:'與疑問名詞「어디、무엇、누가…」搭配使用，涵蓋全部', ex:[
+      E('그 여자는 누가 봐도 다 예쁘다고 해요.','누가 봐도','不管是誰都會覺得那女的很漂亮。','여자:女子'),
+      E('저희 삼촌은 무엇을 해도 다 실패해요.','무엇을 해도','我叔叔不管做什麼通通失敗。','삼촌:三寸,실패:失敗'),
+    ]},
+    {label:'以文法句型的形式使用，有允許之意「可以……、……也沒關係」', rule:'아／어도 되다、아／어도 괜찮다、아／어도 좋다', ex:[
+      E('다리가 좀 짧아도 괜찮아요.','짧아도','腿有點短也沒關係。',''),
+      E('이 커피 마셔도 돼요?','마셔도','可以喝這咖啡嗎？',''),
+      E('학생, 가도 좋아요.','가도','學生，你可以走了。','학생:學生'),
+    ]},
+    {label:'「…아도 …아도」重複兩次，有強調之意', ex:[
+      E('먹어도 먹어도 배가 고파요.','먹어도 먹어도','即使吃很多還是很餓。',''),
+      E('자도 자도 또 졸려요.','자도 자도','即使睡很久還是很想睡。',''),
+      E('봐도 봐도 또 보고 싶어요.','봐도 봐도','一而再再而三的，就是很想看。',''),
+    ]},
+    {label:'「名詞만…아도」把一般條件以最誇張的方式表達', ex:[
+      E('이 문제만 풀었어도 합격했을 거야.','문제만 풀었어도','只要有解這題，我應該就考上了。','문제:問題,합격:合格'),
+      E('샘의 목소리만 들어도 무서워요.','목소리만 들어도','只是聽到老師的聲音而已也會怕。',''),
+      E('그때 그 일만 생각해도 심장이 떨려요.','그 일만 생각해도','只要想起那件事情，心跳就會加速。','심장:心臟'),
+    ]},
+  ],
+},
+{
+  no:'09', title:'더라도', meaning:'即使',
+  tip:'與動詞、形容詞、이다、았／었 連用',
+  usages:[
+    {label:'即使', ex:[
+      E('맵더라도 다 먹을 수 있으니까 걱정하지 마.','맵더라도','即使再辣我也能吃完，所以不用擔心。',''),
+      E('아무리 어려운 일이 닥치더라도 다 이겨낼 거예요.','닥치더라도','即使遇到難事，我也能戰勝。',''),
+    ]},
+  ],
+},
+{
+  no:'10', title:'動詞＋ㄹ / 을 때、動詞＋았 / 었을 때', meaning:'……的時候',
+  tip:'ㄹ 때：動詞無尾音；을 때：動詞有尾音',
+  usages:[
+    {label:'……的時候', ex:[
+      E('어렸을 때 자연에서 놀기를 좋아했어요.','어렸을 때','小時候我喜歡在大自然玩耍。','자연:自然'),
+      E('운전할 때 핸드폰 좀 보지 마세요.','할 때','開車的時候不要看手機。','운전:運轉'),
+      E('웃을 때 입을 가리세요.','웃을 때','笑的時候請遮嘴巴。',''),
+      E('드라마 볼 때 방해하지 마.','볼 때','看連續劇時不要打擾我。','방해:妨害'),
+      E('아까 때렸을 때 많이 아팠어요?','때렸을 때','剛才打你時有很痛嗎？',''),
+      E('잘 때 코를 골아서 회사 동료가 그걸 녹음했어요.','잘 때','睡覺時因為有打呼，所以同事把它錄起來了。','회사:會社,동료:同僚,녹음:錄音'),
+    ]},
+  ],
+},
+{
+  no:'11', title:'動詞／形容詞＋기 때문에', meaning:'因為……所以',
+  tip:'表示原因、理由，不能使用勸誘、命令型語尾。因前句的情況使得後句產生變化或受到牽連',
+  usages:[
+    {label:'因為……所以', ex:[
+      E('평상시에 일이 많기 때문에 주말에는 잠만 자고 싶어요.','많기 때문에','平時工作量很大，所以週末只想睡覺。','평상시:平常時,주말:週末'),
+      E('너 때문에 교감한테 걸렸잖아!','너 때문에','都是你啦！被教務主任抓到了！','교감:校監'),
+      E('장마 때문에 지하실이 빗물에 잠겼어요.','장마 때문에','因為梅雨，所以地下室淹水了。','지하실:地下室'),
+      E('멋있기 때문에 다 용서가 돼요.','기 때문에','因為帥，所以都能原諒。','용서:容恕'),
+    ]},
+  ],
+},
+{
+  no:'12', title:'지만', meaning:'但是、雖然……但',
+  tip:'이지만：前面名詞有尾音；지만：前面名詞無尾音；動詞／形容詞＋지만，可使用「았」、「겠」',
+  usages:[
+    {label:'前後對立的狀況：但是', ex:[
+      E('춤은 싫지만 한번 춰 보겠습니다.','싫지만','雖然不愛跳舞，但我會跳跳看。','번:番'),
+      E('약을 먹었지만 배가 아직도 아파요.','먹었지만','雖然吃過藥，但肚子還是很痛。','약:藥'),
+      E('즐거운 만남이었지만 마음 한 구석이 허전해요.','만남이었지만','雖然相見很愉快，但心裡有些空虛。',''),
+      E('우유도 맛있지만 전 콜라를 더 좋아해요.','맛있지만','雖然牛奶也很好喝，但我更喜歡可樂。','우유:牛乳'),
+    ]},
+    {label:'與「는데」相似，表示事實', ex:[
+      E('드셔 보시면 알겠지만 맛이 담백합니다.','알겠지만','吃了就會知道，味道很樸實。','담백:淡白'),
+      E('보시면 알겠지만 라인이 예술입니다.','알겠지만','看了就知道，線條很美。','예술:藝術'),
+    ]},
+    {label:'慣用型，與「미안하다、실례하다」連用', ex:[
+      E('실례하지만 화장실이 어느 쪽에 있습니까?','실례하지만','不好意思，請問洗手間在哪裡呢？','실례:失禮,화장실:化粧室'),
+      E('미안하게는 됐지만 꼭 가 주셔야 해요.','됐지만','雖然很抱歉，但您一定要去。','미안:未安'),
+    ]},
+  ],
+},
+{
+  no:'13', title:'ㄴ데 / 은데 / 는데 / 인데', meaning:'完整寫法：그런데',
+  tip:'動詞、있다／없다＋는데\n形容詞／動詞＋았는데、겠는데\n形容詞＋ㄴ／은데\n名詞＋인데',
+  usages:[
+    {label:'因為……所以。同義詞：(으)니까', rule:'形容詞／動詞 (으)니까', ex:[
+      E('밥솥이 고장났는데 오늘은 외식합시다.','고장났는데','電鍋壞了，今天就吃外食吧。','고장:故障,외식:外食'),
+      E('눈이 많이 오는데 집에나 있자.','오는데','雪下很大，所以就在家吧。',''),
+    ]},
+    {label:'但是。同義詞：지만', ex:[
+      E('친구 집에는 갔는데 친구를 못 만났어요. = 친구 집에는 갔지만 친구를 못 만났어요.','갔는데|갔지만','雖然去了朋友家但沒能見到朋友。','친구:親舊'),
+      E('아픈데 출근했어요.','아픈데','生病了但是還是上班了。','출근:出勤'),
+    ]},
+    {label:'前面為鋪陳，後句為主題', ex:[
+      E('가고 싶은 곳이 있는데 같이 갈래?','있는데','我有想去的地方，要一起去嗎？',''),
+      E('벌써 시작했는데 빨리 와서 봐요.','했는데','已經開始了，快過來看。','시작:始作'),
+      E('폭설인데도 나갈 거예요?','인데','暴風雪耶，你還是要出門嗎？','폭설:暴雪'),
+      E('이 책 재미있는데 정말 안 읽으실래요?','재미있는데','這書很好看，你真的不看嗎？','책:冊'),
+      E('일이 좀 복잡한데 무슨 좋은 생각 없으세요?','복잡한데','事情有些複雜，你有什麼好想法嗎？','복잡:複雜'),
+    ]},
+    {label:'一般講故事或陳述事情時使用', ex:[
+      E('옛날 옛날에 한 공주가 살고 있었는데...','있었는데','從前從前住著一個公主……','공주:公主'),
+      E('어떤 바닷가에 한 아이가 있는데 돌고래와 친구였습니다.','있는데','某個海邊住著一個孩子，他跟海豚是朋友。','친구:親舊'),
+    ]},
+  ],
+},
+{
+  no:'14', title:'(으)면', meaning:'……的話。有假設之意',
+  tip:'用法：動詞／形容詞 (으)면',
+  usages:[
+    {label:'……的話', ex:[
+      E('이걸 다 먹으면 배가 아플 거예요.','먹으면','你把這些全部吃完的話，肚子應該會痛。',''),
+      E('한국에 가면 그 식당에 꼭 가 보세요.','가면','你去韓國的話，一定要去那家餐廳。','한국:韓國,식당:食堂'),
+      E('일을 하다 보면 많은 일들을 겪게 돼요.','보면','工作時難免會遇到很多事情。',''),
+      E('배가 고프면 밥을 먹는 거처럼 문제가 생기면 해결책을 찾으세요.','고프면','就像肚子餓了要吃飯一樣，遇到問題請找出解決方法。','문제:問題,해결책:解決策'),
+    ]},
+  ],
+},
+{
+  no:'15', title:'(으)면서', meaning:'一邊……一邊',
+  tip:'動詞 (으)면서',
+  usages:[
+    {label:'同時進行或是發生了兩件以上的事情。', ex:[
+      E('밥을 먹으면서 텔레비전 보지 말아.','먹으면서','不要邊吃飯邊看電視。',''),
+      E('운전 하면서 핸드폰 사용하다가 접촉사고 났어요.','하면서','邊開車邊用手機，所以擦撞了別台車。','운전:運轉,사용:使用,접촉:接觸,사고:事故'),
+      E('자면서 코를 골아서 친구한테 맞았어.','자면서','因為睡覺時打呼，所以被朋友打。','친구:親舊'),
+      E('전 음악을 들으면서 샤워하는 것을 즐겨요.','들으면서','我很享受邊洗澡邊聽音樂。','음악:音樂'),
+    ]},
+    {label:'名詞＋(이)면서：陳述並列對等的狀態', ex:[
+      E('엄마이면서 직장 여성이에요.','엄마이면서','是媽媽也是職業婦女。','직장:職場,여성:女性'),
+      E('여기는 집이면서 회사예요.','집이면서','這裡既是家也是公司。','회사:會社'),
+      E('남편이면서 회사 상사라서 좀 불편해요.','남편이면서','既是老公又是上司，所以有些不方便。','남편:男便,회사:會社,상사:上司,불편:不便'),
+    ]},
+  ],
+},
+{
+  no:'16', title:'(으)러', meaning:'前往做某件事情，與移動動詞搭配使用',
+  tip:'動詞으러＋移動動詞',
+  tips:['가다（去）、오다（來）、들어가다（進去）、들어오다（進來）、올라가다（上去）、올라오다（上來）、내려가다（下去）、내려오다（下來）等。'],
+  usages:[
+    {label:'前往做某件事', ex:[
+      E('점심 시간이네! 밥 먹으러 가요.','먹으러','午餐時間耶！快去吃飯吧。','점심:點心,시간:時間'),
+      E('다음 달에도 같이 노래 부르러 갈래요?','부르러','下個月也一起去唱歌如何？',''),
+      E('자주 집에 놀러 오세요.','놀러','請常來家裡玩喔。',''),
+      E('이젠 학원에 영어 배우러 안 가요.','배우러','我以後不去補習班學英文。','학원:學院,영어:英語'),
+      E('물건 가지러 들어 가도 돼요?','가지러','我可以進去拿東西嗎？','물건:物件'),
+    ]},
+  ],
+},
+{
+  no:'17', title:'(으)려고', meaning:'為了',
+  tip:'使用方法：動詞 (으)려고',
+  usages:[
+    {label:'為了', ex:[
+      E('한국어를 잘 하려고 한국으로 유학 가려고 해요.','하려고|유학 가려고','為了學好韓文，打算去韓國留學。','한국어:韓國語,한국:韓國,유학:留學'),
+      E('제 절친을 만나려고 비행기를 서른 시간 탔어요.','만나려고','為了見我好朋友，坐了30小時的飛機。','절친:切親,비행기:飛行機,시간:時間'),
+    ]},
+  ],
+},
+{
+  no:'18', title:'冠形詞：는 / ㄴ / 은', meaning:'讓動詞／形容詞扮演名詞的角色，後面接所要敘述的名詞',
+  tip:'',
+  tips:[
+    '現在式：動詞、있다／없다＋는；形容詞＋ㄴ／은',
+    '未來式：動詞、있다／없다＋ㄹ／을；形容詞＋ㄹ／을',
+    '過去式：動詞、있다／없다＋ㄴ／은',
+  ],
+  usages:[
+    {label:'冠形詞＋名詞', ex:[
+      E('멋진 차를 선물 받고 싶어요.','멋진 차','禮物想收到很帥氣的車。','차:車,선물:膳物'),
+      E('추운 날씨에도 일하러 나가시는 아버지입니다.','추운 날씨','在冷天也出去工作的父親。',''),
+      E('마실 물 좀 주세요.','마실 물','請給我一杯飲用水。',''),
+      E('연인이 된 두 사람 행복해 보여요.','된 두 사람','成為戀人的他們，看起來好幸福。','연인:戀人,행복:幸福'),
+      E('지금 저기서 걸어오는 남자는 제 오빠인 듯해요.','걸어오는 남자','現在從那裡走過來的人，好像是我哥哥。','지금:只今,남자:男子'),
+    ]},
+  ],
+},
+{
+  no:'19', title:'다가的使用方法', meaning:'……到一半……；又……又……',
+  tip:'動詞／形容詞＋다가',
+  usages:[
+    {label:'某動作做到一半轉換其他動作，……一半……', ex:[
+      E('음악을 듣다가 잠이 들었어요.','듣다가','聽音樂到一半睡著了。','음악:音樂'),
+      E('저녁을 먹다가 전화를 받아서 입맛이 없어졌어요.','먹다가','吃晚飯到一半接電話，所以沒胃口了。','전화:電話'),
+      E('간식을 먹다가 체해서 소화제를 먹었어요.','먹다가','吃點心到一半，因為吃太快所以吃了消化藥。','간식:間食,체하다:滯하다,소화제:消化劑'),
+    ]},
+    {label:'反覆發生兩件事情：又……又，忽……忽', ex:[
+      E('괜찮다가 안 괜찮다가 그래요.','괜찮다가 안 괜찮다가','時好時壞。',''),
+      E('이제는 울다가 웃다가 안 할 거예요.','울다가 웃다가','我以後不再又哭又笑了。',''),
+      E('자다가 깨다가 해서 잠을 설쳤어요.','자다가 깨다가','睡睡醒醒的所以沒睡好。',''),
+      E('요즘 날씨가 덥다가 춥다가 해요.','덥다가 춥다가','最近天氣忽冷忽熱。',''),
+    ]},
+  ],
+},
+{
+  no:'20', title:'는 김에', meaning:'順便',
+  tip:'動詞는 김에',
+  usages:[
+    {label:'順便', ex:[
+      E('주방에 가는 김에 물 좀 갖다주라.','가는 김에','去廚房順便幫我拿杯水。','주방:廚房'),
+      E('야식 사러 가는 김에 맥주하고 소주도 사 와.','가는 김에','去買宵夜時，順便也買啤酒跟燒酒回來。','야식:夜食,맥주:麥酒,소주:燒酒'),
+    ]},
+  ],
+},
+{
+  no:'21', title:'는 동안', meaning:'期間、……時',
+  tip:'動詞는 동안',
+  usages:[
+    {label:'期間、……時', ex:[
+      E('한국어를 배우는 동안 참 힘들었어요.','배우는 동안','學韓文的期間，真累人啊。','한국어:韓國語'),
+      E('미국에 가 있는 동안 많은 일들이 일어났어요.','가 있는 동안','待在美國的期間發生了很多事情。','미국:美國'),
+      E('동생을 걱정하는 동안 제 동생은 마냥 자네요.','걱정하는 동안','我在擔心弟弟時，他卻睡死了。','동생:同生'),
+    ]},
+  ],
+},
+{
+  no:'22', title:'ㄹ / 을 텐데', meaning:'前句為推測，而後句為提出建議或方案',
+  tip:'',
+  usages:[
+    {label:'推測＋建議', ex:[
+      E('오후에 비가 올텐데 우산을 가져 가세요.','비가 올텐데','下午會下雨，請帶著雨傘。','오후:午後,우산:雨傘'),
+      E('그렇게 하면 안 될텐데.','안 될텐데','那樣做應該不行喔。',''),
+      E('얇게 입으면 추울텐데 옷을 갈아 입으면 어떨까요?','추울텐데','穿太薄會冷，換件衣服如何？',''),
+    ]},
+  ],
+},
+{
+  no:'23', title:'副詞化', meaning:'게',
+  tip:'',
+  usages:[
+    {label:'將形容詞副詞化來修飾後面的動詞，敘述動詞的狀態', ex:[
+      E('케이크를 예쁘게 만들었어요.','예쁘게','蛋糕做得真漂亮。（漂亮地做了）','','예쁘다 → 예쁘게　漂亮地'),
+      E('요즘 바쁘게 살아요.','바쁘게','最近過得很忙碌（忙碌地生活）','','바쁘다 → 바쁘게　忙碌地'),
+      E('그만 아프게 하세요.','아프게','不要再弄痛我了。','','아프다 → 아프게　痛地'),
+      E('계약서를 자세하게 보세요.','자세하게','請仔細地看契約。','계약서:契約書,자세하다:仔細하다','자세하다 → 자세하게　仔細地'),
+      E('정말 어렵게 준비했어요.','어렵게','我好不容易準備好。','준비:準備','어렵다 → 어렵게　好不容易地'),
+      E('저녁을 맛있게 만들었어요.','맛있게','煮了美味的晚餐。','','맛있다 → 맛있게　好吃地'),
+      E('너무 춥게 입었어.','춥게','你穿得太薄了。（穿得太冷了）','','춥다 → 춥게　冷地'),
+      E('옷을 하얗게 입었어요.','하얗게','一身穿得很白。','','하얗다 → 하얗게　白地'),
+      E('물을 뜨겁게 주세요.','뜨겁게','請把水弄熱再給我。','','뜨겁다 → 뜨겁게　熱地'),
+      E('저는 싱겁게 먹어요.','싱겁게','我吃得很清淡。','','싱겁다 → 싱겁게　清淡地'),
+      E('즐겁게 놀았어.','즐겁게','玩得很愉快。','','즐겁다 → 즐겁게　愉悅地'),
+      E('이렇게 해 주세요.','이렇게','請幫我做成這樣。','','이렇다 → 이렇게　這樣地'),
+      E('불쌍하게 울고 있어요.','불쌍하게','哭得很可憐。','','불쌍하다 → 불쌍하게　可憐地'),
+    ]},
+    {label:'某些形容詞套用「이、히、리」轉換為副詞，此類型的形容詞並未使用「게」來轉換為副詞，或也有兩種都使用的情況。', ex:[
+      E('빨리、빠르게','빨리|빠르게','快點','','形容詞：빠르다'),
+      E('많이','많이','多地','','形容詞：많다'),
+      E('깨끗하게、깨끗이','깨끗하게|깨끗이','乾淨地','','形容詞：깨끗하다'),
+      E('가깝게、가까이','가깝게|가까이','近地','','形容詞：가깝다'),
+      E('솔직히','솔직히','誠實地','솔직:率直','形容詞：솔직하다'),
+      E('천천히','천천히','慢慢地','','形容詞：천천하다'),
+      E('편히','편히','舒適地','편:便','形容詞：편하다'),
+      E('조용히','조용히','安靜地','조용:從容','形容詞：조용하다'),
+      E('분명히、분명하게','분명히|분명하게','明確地','분명:分明','形容詞：분명하다'),
+    ]},
+  ],
+},
+];
+
+// 語尾 어미 01–37 — PDF pages 43–68 (book p.170–195)
+const ENDING = [
+{
+  no:'01', title:'現在式｜名詞', meaning:'名詞＋이다的現在式語尾',
+  tip:'',
+  tips:[
+    '有尾音：이십니다(까)｜이세요｜입니다(까)｜이에요｜이야',
+    '無尾音：십니다(까)｜세요｜입니다(까)｜예요（이요／요）｜야',
+  ],
+  usages:[
+    {label:'格式體：(이)십니다、(이)세요。不適用於第一人稱「我」或是有情名詞以外的名詞', ex:[
+      E('누구세요?','누구세요','您是誰？',''),
+      E('이것은 무엇십니까?','무엇십니까','這是什麼？',''),
+      E('할아버지 연세가 어떻게 되십니까?','되십니까','A：爺爺今年貴庚？','연세:年歲'),
+      E('할아버지는 올해 여든 살이십니다.','여든 살이십니다','B：爺爺他八十歲了。',''),
+      E('나이가 어떻게 되십니까?','되십니까','A：請問您幾歲。',''),
+      E('저는 스물다섯 살입니다.','스물다섯 살입니다','B：我二十五歲。',''),
+      W('저는 25살이십니다.','살이십니다','我二十五歲。（「我」不能用 이십니다）',''),
+      W('저는 25살이세요.','살이세요','我二十五歲。（「我」不能用 이세요）',''),
+    ]},
+    {label:'입니다的問句是：입니까?', rule:'適用於正式場合，如開會或與長輩說話時使用', ex:[
+      E('이것은 무엇입니까?','무엇입니까','這是什麼？',''),
+      E('저는 주부면서 영어 선생입니다.','선생입니다','我既是主婦也是英文老師。','주부:主婦,영어:英語,선생:先生'),
+      E('교수님, 지금은 몇 시입니까?','몇 시입니까','教授，請問現在是幾點呢？','교수:教授,지금:只今,시:時'),
+      E('할머니가 어렸을 때 살았던 집입니다.','집입니다','這房子是奶奶小時候住的房子。',''),
+    ]},
+    {label:'이에요／예요、(이)요：對熟人時使用', ex:[
+      E('이건 뭐예요?','뭐예요','這是什麼？',''),
+      E('얼마예요?','얼마예요','多少錢？',''),
+      E('이건 나비고 저건 나방이에요.','나방이에요','這個是蝴蝶，那個是蛾。',''),
+    ]},
+    {label:'(이)야：平語。對晚輩或是熟人、家人使用', ex:[
+      E('이건 뭐야?','뭐야','這是什麼？',''),
+      E('한국 소설이야.','한국 소설이야','是韓國小說。','한국:韓國,소설:小說'),
+      E('난 슈퍼맨이야!','슈퍼맨이야','我是超人！',''),
+    ]},
+  ],
+},
+{
+  no:'02', title:'現在式｜動詞／形容詞', meaning:'動詞、形容詞的現在式語尾',
+  tip:'',
+  tips:[
+    '으십니다(까)｜으세요｜ㅂ니다(까)｜아요｜아',
+    '십니다(까)｜세요｜습니다(까)｜어요｜어',
+    '여요 = 해요｜여 = 해',
+  ],
+  usages:[
+    {label:'格式體：(으)십니다、(으)세요。不適用於第一人稱「我」', ex:[
+      E('안녕하십니까?','안녕하십니까','您好。','안녕:安寧'),
+      E('많이 드세요.','드세요','請多吃點。',''),
+      E('할아버지는 오늘도 걸어서 집으로 돌아가십니다.','돌아가십니다','爺爺今天也走路回家。',''),
+      E('사장님, 어디에 가십니까?','가십니까','A：老闆你要去哪？','사장:社長'),
+      E('나 외근 나가요.','나가요','B：我要跑外務。','외근:外勤'),
+      W('나 외근 나가십니다.','나가십니다','我要跑外務。（「我」不能用 십니다）','외근:外勤'),
+    ]},
+    {label:'ㅂ니다／습니다：用於正式場合，如開會或與長輩說話時使用', ex:[
+      E('교감 선생님, 제 아들은 과학책을 좋아합니다.','좋아합니다','教務主任，我兒子喜歡科學書。','교감:校監,선생:先生,과학책:科學冊'),
+      E('요즘 몸과 마음이 너무 힘듭니다.','힘듭니다','最近身心都疲倦。',''),
+      E('끝까지 도와 주셔서 감사합니다.','감사합니다','感謝你幫忙到最後。','감사:感謝'),
+    ]},
+    {label:'아요／어요／여요：對熟人時使用', rule:'아요：ㅏ、ㅗ\n어요：ㅏ、ㅗ之外的母音，「ㅓ、ㅕ、ㅜ、ㅠ、ㅡ、ㅣ、ㅟ」\n여요：해요', ex:[
+      E('두 눈으로 똑똑히 봐요.','봐요','用兩隻眼睛看清楚。',''),
+      E('나도 그렇게 생각해요.','생각해요','我也這麼認為（我也認同）。',''),
+      E('집에 올 때 바나나 사 와요.','와요','回來時買香蕉回來。',''),
+      E('외국 사람들도 삼계탕을 잘 먹어요.','먹어요','外國人也很愛吃蔘雞湯。','외국:外國,삼계탕:蔘雞湯'),
+    ]},
+    {label:'아／어／여：平語。對晚輩或是熟人、家人使用', rule:'아：ㅏ、ㅗ\n어：ㅏ、ㅗ之外的母音：「ㅓ、ㅕ、ㅜ、ㅠ、ㅡ、ㅣ、ㅟ」\n여：해요', ex:[
+      E('어디로 도망가고 싶어.','싶어','我想逃。','도망:逃亡'),
+      E('그런 눈으로 날 보지 마.','보지 마','不要用那種眼神看我。',''),
+      E('오늘 특히 더 예뻐.','예뻐','今天特別漂亮。','특히:特히'),
+      E('망고 먹고 싶으니까 다섯 개 사 와.','사 와','我想吃芒果，買五個回來。','개:個','書上寫作「5 (다섯) 개」'),
+      E('환청이 들려.','들려','會幻聽。','환청:幻聽'),
+    ]},
+  ],
+},
+{
+  no:'03', title:'未來式｜動詞／形容詞', meaning:'動詞、形容詞的未來式語尾（겠）',
+  tip:'',
+  tips:[
+    '으시겠습니다｜으시겠어요｜겠습니다｜겠어요｜겠어',
+    '시겠습니다｜시겠어요',
+  ],
+  usages:[
+    {label:'格式體：(으)시겠습니다、(으)시겠어요。主詞不適用於第一人稱', ex:[
+      E('무엇을 드시겠습니까?','드시겠습니까','您要點什麼？',''),
+      E('손님, 주문하시겠습니까?','주문하시겠습니까','客人，你要點了嗎？','주문:注文'),
+      E('같이 드라마를 보시겠습니까?','보시겠습니까','你要一起看連續劇嗎？',''),
+      E('아주머니께서도 같이 여행을 가시겠어요?','가시겠어요','大嬸也要一起去旅行嗎？','여행:旅行'),
+    ]},
+    {label:'겠습니다：適用於正式場合，如開會或與長輩說話時使用', ex:[
+      E('잘 먹겠습니다.','먹겠습니다','我要開動了。',''),
+      E('알겠습니다.','알겠습니다','我知道了。',''),
+      E('모르겠습니다.','모르겠습니다','不知道。',''),
+    ]},
+    {label:'겠어요：對熟人時使用', ex:[
+      E('호주로 반드시 가겠어요.','가겠어요','我一定會去澳洲。','호주:濠洲'),
+      E('더이상 욕을 하지 않겠어요.','않겠어요','我以後再也不講髒話。','이상:以上,욕:辱'),
+    ]},
+    {label:'겠어：平語。適用於晚輩與熟人', ex:[
+      E('아이스크림을 먹겠어.','먹겠어','我要吃冰淇淋。',''),
+      E('그 아이가 있으면 절대로 가지 않겠어.','않겠어','有他在我絕對不去。','절대:絕對'),
+    ]},
+  ],
+},
+{
+  no:'04', title:'過去式｜名詞', meaning:'名詞＋이다的過去式語尾',
+  tip:'',
+  tips:[
+    '有尾音：이셨습니다｜이셨어요｜이었습니다｜이었어요｜이었어',
+    '無尾音：셨습니다｜셨어요｜였습니다｜였어요｜였어',
+  ],
+  usages:[
+    {label:'格式體：(이)셨습니다、(이)셨어요。主詞不適用於第一人稱', ex:[
+      E('할머니는 예전에 스파이셨습니다.','스파이셨습니다','奶奶以前是間諜。',''),
+      E('참 대단한 분이셨어요.','분이셨어요','曾經是不得了的人。',''),
+    ]},
+    {label:'이었습니다／였습니다：適用於正式場合，如開會或與長輩說話時使用', ex:[
+      E('어제 그거 연애 편지였어요?','편지였어요','昨天那是情書嗎？','연애:戀愛,편지:便紙'),
+      E('아까 먹은 게 콩나물국이었습니까?','콩나물국이었습니까','剛才吃的是豆芽湯嗎？',''),
+    ]},
+    {label:'이었어요／였어요：對熟人時使用', ex:[
+      E('어제 그 여자가 너희 언니였어?','언니였어','昨天那女的是你姊姊？','여자:女子'),
+      E('그런 줄 알았는데 아니었어요.','아니었어요','我以為是那樣，但原來不是。',''),
+    ]},
+    {label:'이었어／였어：對晚輩與熟人時使用', ex:[
+      E('대학에 합격하는 것이 내 꿈이었어.','꿈이었어','考上大學是我的夢想。','대학:大學,합격:合格'),
+      E('난 정말 바보였어.','바보였어','我真的是笨蛋。',''),
+    ]},
+  ],
+},
+{
+  no:'05', title:'過去式｜動詞／形容詞', meaning:'動詞、形容詞的過去式語尾',
+  tip:'',
+  tips:[
+    '으셨습니다｜으셨어요｜았습니다｜았어요｜았어',
+    '셨습니다｜셨어요｜었습니다｜었어요｜었어',
+    '했습니다｜했어요｜했어',
+  ],
+  usages:[
+    {label:'格式體：(으)셨습니다、(으)셨어요。主詞不適用於第一人稱', ex:[
+      E('이미 떠나셨습니다.','떠나셨습니다','已經離開了。',''),
+      E('모르셨어요?','모르셨어요','您不知道嗎？',''),
+      E('감동을 받아서 눈물을 흘리셨어요.','흘리셨어요','因感動而流下眼淚。','감동:感動'),
+    ]},
+    {label:'았습니다／었습니다／했습니다：適用於正式場合，如開會或與長輩說話時使用', ex:[
+      E('빨간색을 아주 좋아했습니다.','좋아했습니다','曾經很愛紅色。','색:色'),
+      E('낮에 커피 세 잔을 마셨습니다.','마셨습니다','白天喝了三杯咖啡。','잔:盞'),
+      E('부모님에게 많이 혼났습니다.','혼났습니다','被父母親罵很慘。','부모:父母'),
+    ]},
+    {label:'았어요／었어요／했어요：對熟人使用', ex:[
+      E('갑자기 쓰러져서 같이 병원에 있었어요.','있었어요','突然暈倒，所以一起待在醫院了。','병원:病院'),
+      E('날씨가 계속 추워서 또 감기에 걸렸어요.','걸렸어요','持續的冷天氣，所以我又感冒了。','계속:繼續,감기:感氣'),
+      E('눈이 와서 엄청나게 추웠어요.','추웠어요','因為下雪所以好冷。',''),
+    ]},
+    {label:'았어／었어／했어：晚輩與熟人', ex:[
+      E('알았어.','알았어','知道了。',''),
+      E('몰랐어.','몰랐어','原本不知道。',''),
+      E('당황했어.','당황했어','我慌了。','당황:唐慌'),
+      E('(나한테) 전화 했어?','전화 했어','你有打給我嗎？','전화:電話'),
+      E('지우개로 지웠어?','지웠어','你用橡皮擦擦的嗎？',''),
+    ]},
+  ],
+},
+{
+  no:'06', title:'(으)십시오 / (으)세요', meaning:'請',
+  tip:'沒有問句，只適用於動詞',
+  usages:[
+    {label:'請', ex:[
+      E('안녕히 가십시오.','가십시오','請慢走。','안녕:安寧'),
+      E('또 오세요.','오세요','歡迎再光臨。',''),
+      E('조심해서 가세요.','가세요','請小心慢走。','조심:操心'),
+      E('그대, 나를 떠나세요.','떠나세요','請你離開我。',''),
+      E('가위로 자르세요.','자르세요','請用剪刀剪。',''),
+    ]},
+  ],
+},
+{
+  no:'07', title:'겠', meaning:'要……；會……（推測）；客氣、正式的語氣',
+  tip:'動詞／形容詞겠다、名詞 (이)겠다\n動詞／形容詞았겠다',
+  usages:[
+    {label:'堅持要做的事情或是想要做的事情，「要……」', ex:[
+      E('저는 오늘 면을 먹겠습니다.','먹겠습니다','我今天要吃麵。','면:麵'),
+      E('그 일을 꼭 성사시키겠습니다.','성사시키겠습니다','我一定會成交那件事情。','성사:成事'),
+    ]},
+    {label:'有推測之意，「會……」', ex:[
+      E('호주는 지금 겨울이겠어요?','겨울이겠어요','澳洲現在應該是冬天？','호주:濠洲,지금:只今'),
+      E('다음 주까지 계속 비가 내리겠어요.','내리겠어요','雨應該會下到下星期。','주:週,계속:繼續'),
+    ]},
+    {label:'客氣、正式的語氣', ex:[
+      E('알겠습니다. / 모르겠습니다.','알겠습니다|모르겠습니다','我知道了。／我不知道。',''),
+      E('빨리 처리하겠습니다.','처리하겠습니다','我會盡快處理。','처리:處理'),
+      E('제가 먼저 씻겠습니다.','씻겠습니다','我先洗。',''),
+    ]},
+    {label:'有請求之意，意涵共同行為', ex:[
+      E('내일 같이 가시겠어요?','가시겠어요','明天要一起去嗎？','내일:來日'),
+      E('손님이 사 온 만두예요. 드시겠어요?','드시겠어요','這是客戶買來的餃子，您要吃嗎？','만두:饅頭'),
+    ]},
+    {label:'打招呼時使用，慣用語', ex:[
+      E('처음 뵙겠습니다.','뵙겠습니다','初次見面你好。',''),
+      E('다녀오겠습니다.','다녀오겠습니다','那我出門了。',''),
+    ]},
+    {label:'播報新聞或是廣播時使用', ex:[
+      E('요즘 낮과 밤 온도차가 심하겠습니다.','심하겠습니다','最近早晚溫差大。','온도차:溫度差,심하다:甚하다'),
+      E('비행기가 이제 곧 이륙하겠습니다.','이륙하겠습니다','飛機即將起飛。','비행기:飛行機,이륙:離陸'),
+    ]},
+  ],
+},
+{
+  no:'08', title:'지(요)?', meaning:'……吧？（再次確認）；……呢？',
+  tip:'動詞／形容詞＋지요?、名詞＋(이)지요?\n지요的縮寫：죠',
+  usages:[
+    {label:'再次確認、吧？', ex:[
+      E('형님의 어머니시지요?','어머니시지요','是大哥的母親吧？','형님:兄님'),
+      E('건축가 맞으시죠?','맞으시죠','您是建築師對吧？','건축가:建築家'),
+      E('이거 정말 맛이 있지요?','있지요','這個很好吃吧？',''),
+    ]},
+    {label:'與疑問名詞搭配使用：呢？', rule:'搭配疑問名詞：얼마、어디、언제、몇、무엇，等於「아요／어요」', ex:[
+      E('지금 몇 시지요? = 지금 몇 시예요?','몇 시지요','現在是幾點呢？','지금:只今,시:時'),
+      E('어디에 가지요?','가지요','要去哪裡呢？',''),
+      E('얼마지요?','얼마지요','是多少錢呢？',''),
+    ]},
+  ],
+},
+{
+  no:'09', title:'군(요)', meaning:'新認知的事情、感嘆或自言自語時使用',
+  tip:'形容詞 군요、動詞는군요、名詞 (이)로군요／아니로군요\n動詞／形容詞＋았／었군요、名詞＋이었／였군요\n動詞／形容詞＋겠군요（有推測之意）',
+  usages:[
+    {label:'原來……啊', ex:[
+      E('한국 화장품은 종류가 정말 많군요.','많군요','原來韓國化妝品的種類真多啊。','한국:韓國,화장품:化粧品,종류:種類'),
+      E('전화를 안 받아서 걱정했는데 자고 있었군.','있었군','不接電話所以有些擔心，原來在睡覺啊。','전화:電話'),
+      E('옛날에는 예뻤군.','예뻤군','以前很漂亮啊。',''),
+      E('이 상황을 보니 그도 가겠군.','가겠군','看這情況，他應該也會去。','상황:狀況'),
+      E('이 식당 음식 맛이 별로군요.','별로군요','這餐廳的味道不怎麼樣。','식당:食堂,음식:飲食'),
+      E('제 친구가 아니로군요.','아니로군요','原來不是我朋友啊。','친구:親舊'),
+      E('내일은 날씨가 덥겠군.','덥겠군','明天天氣應該很熱。','내일:來日'),
+      E('저번 주에 옆집에서 밥을 먹었는데 정말 맛있었어요.','','A：上週在鄰居家吃飯，還真不錯吃。','주:週'),
+      E('옆집 아가씨의 음식솜씨가 좋군요.','좋군요','B：原來隔壁小姐的廚藝很好啊。','음식:飲食'),
+    ]},
+  ],
+},
+{
+  no:'10', title:'네(요)', meaning:'口語，有像是中文的語尾「……耶」的用法。對體驗的事情感到驚訝或感嘆時使用',
+  tip:'與「군요」的差異點是在，某些狀況「네요」所敘述的事情需為親身體驗之事',
+  tips:[
+    '動詞／形容詞＋네요、名詞 (이)네요',
+    '動詞／形容詞＋았／었네요',
+    '動詞／形容詞＋겠네요　有推測之意',
+  ],
+  usages:[
+    {label:'……耶', ex:[
+      E('누나 동생의 음식 솜씨가 좋네요.','좋네요','姊姊的弟弟手藝真不錯。（嚐過之後的感想）','동생:同生,음식:飲食'),
+      E('불이 안 켜져서 많이 놀랐겠네요.','놀랐겠네요','燈打不開，你應該嚇到了吧。',''),
+      E('아이구, 공장에 불이 났네요.','났네요','天啊！工廠起火了。','공장:工場'),
+    ]},
+  ],
+},
+{
+  no:'11', title:'形容詞＋ㄴ / 은가(요)?', meaning:'感到疑惑或是自言自語時使用',
+  tip:'',
+  usages:[
+    {label:'……嗎？（疑惑、自言自語）', ex:[
+      E('정말 그런 건가?','건가','真的是那樣嗎？',''),
+      E('바쁜가? 전화를 안 받네!','바쁜가','她在忙嗎？怎麼不接電話呢！','전화:電話'),
+      E('지금 집에 계신가요?','계신가요','現在人在家嗎？','지금:只今'),
+    ]},
+  ],
+},
+{
+  no:'12', title:'動詞＋나(요)?', meaning:'……嗎？（詢問、自言自語）',
+  tip:'動詞았、겠나?\n있다、없다＋나?\n形容詞아／어지나?、形容詞아／어졌나?',
+  tips:['語氣較為女性化。此語尾主要以動詞用法為主，如要使用形容詞時，可把形容詞與「아／어지다」連用，轉換為動詞後使用'],
+  usages:[
+    {label:'單純地詢問', ex:[
+      E('우리는 집에 언제 가나요?','가나요','我們何時回家？',''),
+      E('시합에서 이겼으니 하루 쉬나요?','쉬나요','贏了比賽，所以可以休息一天？','시합:試合'),
+      E('작년부터 강아지를 길렀나요?','길렀나요','從去年開始養狗的嗎？','작년:昨年'),
+      E('몇 시에 그림을 그리나요? = 몇 시에 그림을 그려요?','그리나요','幾點畫畫？','시:時'),
+    ]},
+    {label:'連自己也感到疑問時使用，自言自語', ex:[
+      E('우는 거 같은데 무슨 안 좋은 일이 생겼나?','생겼나','他好像在哭，難道是發生了什麼不好的事情？',''),
+      E('벌써 날이 어두워졌나?','어두워졌나','已經天黑了嗎？',''),
+      E('한국이 그렇게 좋나요?','좋나요','韓國真有那麼好？','한국:韓國'),
+      E('이 소설책이 재미없나?','재미없나','這小說不好看？','소설책:小說冊'),
+      E('밤에 지진이 있었나?','있었나','半夜有地震？','지진:地震'),
+    ]},
+    {label:'「나?」：長輩對晚輩，或是對朋友時把「요」拿掉。', ex:[
+      E('아이들이 내 마음을 알려나?','알려나','小孩能明白我的心意嗎？',''),
+      E('누가 그 말을 했나?','했나','是誰說了那些話？',''),
+      E('학생은 학생 때 공부를 잘 했나?','했나','學生在學生時代成績好嗎？','학생:學生,공부:工夫'),
+    ]},
+  ],
+},
+{
+  no:'13', title:'는데、ㄴ데 / 은데(요)', meaning:'句尾的 는데：意外、讚嘆、期待對方反應',
+  tip:'',
+  tips:[
+    '動詞는데요、形容詞ㄴ데／은데요、名詞＋인데',
+    '있다／없다＋는데요',
+    '動詞／形容詞았／었는데요',
+    '動詞／形容詞＋겠는데',
+  ],
+  usages:[
+    {label:'對事件感到意外、讚嘆、自言自語時使用', ex:[
+      E('다쳐서 피를 흘린 거 같은데...','같은데','受傷後好像有流血……（在自言自語）',''),
+      E('그 사람 정말 용감한데...','한데','那個人好勇敢啊……','용감:勇敢'),
+      E('지금 밖에 폭우가 내리는데요.','내리는데요','外面現在下大雨。','지금:只今,폭우:暴雨'),
+    ]},
+    {label:'轉達或是告知之後，期待對方的反應時使用', ex:[
+      E('선생님이 다음주에 시험을 본다고 했는데요...','했는데요','老師說下星期要考試……','선생:先生,주:週,시험:試驗'),
+      E('다들 배가 고픈데...','고픈데','大家都很餓……',''),
+    ]},
+    {label:'內心感到焦慮或是擔心時使用', ex:[
+      E('고객님 집이 분명히 이 근처인데...','근처인데','客戶的家明明是在這附近啊……','고객:顧客,분명:分明,근처:近處'),
+      E('고양이 때문에 놀란 거 같은데... 어떡하지?','같은데','好像被貓嚇到了……怎麼辦？',''),
+      E('나 졸업 여행 못 가는데... 친구한테 어떻게 얘기하지?','가는데','我不能去畢業旅行……怎麼跟朋友開口說呢？','졸업:卒業,여행:旅行,친구:親舊'),
+    ]},
+    {label:'與疑問名詞「누구、어디、언제、무엇、얼마、(무슨＋名詞)、(몇＋單位名詞)」等搭配使用，期待答案時使用', ex:[
+      E('오늘 누가 저녁을 준비하는데?','누가|준비하는데','今天誰準備晚餐？','준비:準備'),
+      E('안경이 어디에 있는데요?','어디에 있는데요','眼鏡在哪裡？','안경:眼鏡'),
+      E('우리 언제 쇼핑하러 가는데?','언제|가는데','我們何時去逛街？',''),
+      E('커피 몇 잔 마셨는데?','몇 잔 마셨는데','你喝了幾杯咖啡了啊？','잔:盞'),
+      E('무슨 언어를 배우는데요?','무슨|배우는데요','你在學什麼語言？','언어:言語'),
+      E('얼마 썼는데?','얼마|썼는데','花了多少錢？',''),
+    ]},
+  ],
+},
+{
+  no:'14', title:'아 / 어야 하다 / 되다', meaning:'義務或是該做之事，「要……必須……」',
+  tip:'',
+  usages:[
+    {label:'要……、必須……', ex:[
+      E('오늘은 빨리 집에 가야 해요.','가야 해요','今天要早點回家。',''),
+      E('약이 쓰더라도 다 드셔야 돼요.','드셔야 돼요','即使藥很苦也要吃。','약:藥'),
+      E('속상해도 울지 말아야 할까요?','말아야 할까요','即使難過也不應該哭嗎？','속상하다:속傷하다'),
+    ]},
+  ],
+},
+{
+  no:'15', title:'(으)려고 하다', meaning:'表示意願跟意向。打算……',
+  tip:'使用方法：動詞 (으)려고 하다',
+  usages:[
+    {label:'打算……', ex:[
+      E('저도 이제 새 출발하려고 해요.','출발하려고 해요','我打算開始新人生。（重新出發）','출발:出發'),
+      E('여름이라서 살을 좀 빼려고 합니다.','빼려고 합니다','因為是夏天打算減一點肥。',''),
+    ]},
+  ],
+},
+{
+  no:'16', title:'(으)러 가다', meaning:'去做某件事情。與某些移動動詞（가다、나가다、오다、나오다等）搭配使用',
+  tip:'使用方法：動詞 (으)러 가다',
+  usages:[
+    {label:'去做某件事', ex:[
+      E('답답해서 바람 쐬러 갈까 해요!','쐬러 갈까 해요','因為很悶，所以想去散心！',''),
+      E('영화를 보러 시내로 나갔어요.','보러|나갔어요','去市區看電影。','영화:映畫,시내:市內'),
+      E('수술한 엄마를 보살피러 병원에 갑니다.','보살피러|갑니다','去醫院照顧開刀的媽媽。','수술:手術,병원:病院'),
+    ]},
+  ],
+},
+{
+  no:'17', title:'ㄹ / 을 것이다', meaning:'打算……、會……；應該……（推測）',
+  tip:'不同語尾有：ㄹ／을 것입니다、ㄹ／을 거예요、ㄹ／을 거야',
+  usages:[
+    {label:'動詞ㄹ／을 것이다：有計劃、執行之意。打算……會……', ex:[
+      E('내년에는 꼭 캐나다에 갈 거예요.','갈 거예요','我明年一定會去加拿大。','내년:來年'),
+      E('아저씨는 물건을 사러 나갈 거예요.','나갈 거예요','大叔打算出去買東西。','물건:物件'),
+      E('유학하면 열심히 공부할 것이다.','할 것이다','去留學的話，我會認真唸書。','유학:留學,열심:熱心,공부:工夫'),
+    ]},
+    {label:'形容詞ㄹ／을 것이다：有推測之意。應該……', ex:[
+      E('이렇게 하면 성공할 것 같은데.','성공할 것 같은데','這樣做應該會成功。','성공:成功'),
+      E('새 직원은 무슨 일이든지 다 잘 할 겁니다.','잘 할 겁니다','新職員無論做什麼應該都做得很好。','직원:職員'),
+      E('이모님이 결혼하시면 요리도 잘 하실 거예요.','하실 거예요','阿姨結婚後應該也很會料理。','이모:姨母,결혼:結婚,요리:料理'),
+    ]},
+  ],
+},
+{
+  no:'18', title:'ㄹ / 을게요', meaning:'只適用於第一人稱',
+  tip:'',
+  usages:[
+    {label:'我來……、我們……。主詞為第一人稱。給予承諾或是有服務他人之意', ex:[
+      E('제가 들어오는 길에 커피를 사 올게요.','사 올게요','回來的路上我來買咖啡回來。',''),
+      E('이 일은 우리가 맡아서 처리할게요.','처리할게요','這件事情由我們來搞定。','처리:處理'),
+      E('여기 있는 과일은 제가 먹을게요.','먹을게요','這裡的水果我來吃吧。',''),
+    ]},
+    {label:'有告知之意', ex:[
+      E('지금 통화 중이라서 이따가 전화 드릴게요.','전화 드릴게요','正在通話中，待會兒打給您。','지금:只今,통화:通話,중:中,전화:電話'),
+      E('갔다 올게요.','갔다 올게요','那我出門囉。',''),
+    ]},
+  ],
+},
+{
+  no:'19', title:'ㄹ / 을까요?', meaning:'（我們）要……嗎？；會……嗎？（推測）',
+  tip:'',
+  usages:[
+    {label:'共同行為的「要不要？」：（我們）要……嗎？主詞為第一人稱＋動詞', rule:'主詞（我或我們）＋動詞ㄹ／을까요?', ex:[
+      E('오늘 점심 때 회사 식당에서 같이 먹을까요?','먹을까요','今天午餐我們要不要一起在員工餐廳吃飯？','점심:點心,회사:會社,식당:食堂'),
+      E('제가 할까요?','할까요','要不要我來弄？',''),
+      E('우리가 준비할까요?','준비할까요','要我們準備嗎？','준비:準備'),
+    ]},
+    {label:'主詞為第三人稱＋動詞時，有推測之意', rule:'形容詞ㄹ／을까요?、動詞ㄹ／을까요?（第三人稱）', ex:[
+      E('한국 사람들도 오리 고기를 먹을까요?','먹을까요','韓國人也吃鴨肉嗎？','한국:韓國'),
+      E('이 옷이 저한테 어울릴까요?','어울릴까요','這件衣服我穿合適嗎？',''),
+      E('그분도 이번 세미나에 갈까요?','갈까요','那位也會參加這次的研討會嗎？',''),
+    ]},
+  ],
+},
+{
+  no:'20', title:'ㅂ / 읍시다', meaning:'表示共同行為的「吧」，長輩對晚輩使用。平語為「자」',
+  tip:'',
+  usages:[
+    {label:'……吧', ex:[
+      E('오늘 저녁에 여행을 떠납시다.','떠납시다','今天晚上出發去旅行吧。','여행:旅行'),
+      E('우리 이번 생일에 그냥 먹고 자고 놀자.','놀자','這次生日我們就吃、睡、玩吧。','생일:生日'),
+      E('어서 일을 끝내고 회식하러 갑시다.','갑시다','快把工作結束，去聚餐吧。','회식:會食'),
+      E('나갑시다. 왜냐하면... 답답하니까요.','나갑시다','出去吧，因為很悶。',''),
+      E('추운데 빨리 들어 가자.','가자','好冷，快點進去吧。',''),
+    ]},
+  ],
+},
+{
+  no:'21', title:'ㄹ / 을래요?', meaning:'你要……嗎？（邀約）；我要……',
+  tip:'表示共同行為「你要？」（邀約）、敘述文：「我要」。',
+  usages:[
+    {label:'邀約與回答', ex:[
+      E('이따가 같이 밥 먹으러 갈래?','갈래','A：等一下要一起去吃飯嗎？',''),
+      E('네, 갈래요.','갈래요','B：好，我要去。',''),
+      E('크리스마스 카드 쓸래요?','쓸래요','你要寫聖誕卡片嗎？',''),
+      E('아들아, 라면 먹을래?','먹을래','A：兒子啊，要吃泡麵嗎？',''),
+      E('피곤해요, 잘래요.','잘래요','B：我好累，要睡了。','피곤:疲困'),
+    ]},
+  ],
+},
+{
+  no:'22', title:'고 있다', meaning:'現在進行式。正在……',
+  tip:'',
+  usages:[
+    {label:'正在……', ex:[
+      E('친구가 자고 있는 줄 알았어요.','자고 있','我以為朋友正在睡覺。','친구:親舊'),
+      E('지금 가고 있으니까 조금만 기다려 주세요.','가고 있','我在路上了，請再等一下。','지금:只今'),
+      E('밥을 짓고 있으니까 먼저 씻으세요.','짓고 있','已經在煮了，你先洗吧。',''),
+    ]},
+  ],
+},
+{
+  no:'23', title:'고 있었다', meaning:'過去進行式',
+  tip:'',
+  usages:[
+    {label:'（當時）正在……', ex:[
+      E('아까 울고 있었습니다. 그래서 눈이 부었어요.','울고 있었습니다','剛才在哭，所以眼睛被哭腫了。',''),
+      E('어제 비도 오고 바람도 많이 불고 있었어요.','불고 있었어요','昨天又颳風又下雨。',''),
+      E('화장실에서 옷을 빨고 있었는데.','빨고 있었는데','我剛剛在洗手間洗衣服。','화장실:化粧室'),
+    ]},
+  ],
+},
+{
+  no:'24', title:'아 / 어 있다', meaning:'維持已結束的狀態。……著。',
+  tip:'格式體用法：아／어 계시다',
+  tips:['常用動詞：앉아 있다（坐著）、서 있다（站著）、누워 있다（躺著）、깨어 있다（醒著）、피어 있다（綻放著）、가 있다／와 있다（待著）、죽어 있다（死著）、살아 있다（活著）'],
+  usages:[
+    {label:'……著', ex:[
+      E('계속 앉아 계세요.','앉아 계세요','請繼續坐著。','계속:繼續'),
+      E('하루종일 누워 있으니까 허리가 아파요.','누워 있','躺了整天，腰好酸。','종일:終日'),
+      E('잘못했으니까 거기 가서 서 있어.','서 있어','既然做錯了，去那裡站著。',''),
+      E('누나는 지금 미국에 가 있어요.','가 있어요','姊姊現在待在美國。','지금:只今,미국:美國'),
+    ]},
+  ],
+},
+{
+  no:'25', title:'아 / 어 주다', meaning:'依據搭配的語尾含有給予幫忙或是要求幫忙',
+  tip:'格式體用法：아／어 드리다',
+  usages:[
+    {label:'與「세요、ㄹ／을 거예요、아요／어요…」使用，有請求之意', ex:[
+      E('제발 좀 도와 주세요.','도와 주세요','拜託你幫幫我。',''),
+      E('이번 한번만 먹어 주라.','먹어 주라','這次就好，幫我吃啦。','번:番'),
+      E('이것 좀 쓰레기통에 버려 줄 수 있어?','버려 줄','你可以幫我丟到垃圾桶嗎？','통:桶'),
+      E('아마 내일이면 와 줄 거예요.','와 줄','明天應該會為我而來的。','내일:來日'),
+      E('이 물건 좀 옮겨 주시겠어요?','옮겨 주시겠어요','您可以幫我搬這東西嗎？','물건:物件'),
+      E('이 불쌍한 여인의 말 좀 들어 주세요.','들어 주세요','請聽聽這可憐女人的話。','여인:女人'),
+      E('그 사건에 대해서 말해 줄 거죠?','말해 줄','你會告訴我那事件吧？','사건:事件,대하다:對하다'),
+    ]},
+    {label:'「아／어 드릴까요?、아／어 줄까?」意指詢問別人，主動給予幫忙', ex:[
+      E('무엇을 도와 드릴까요?','도와 드릴까요','需要什麼服務呢？',''),
+      E('내가 먹어 줄까?','먹어 줄까','要幫你吃嗎？',''),
+      E('사장님이 해 줄테니까 걱정하지 마.','해 줄','老闆會幫你，所以不用擔心。','사장:社長'),
+      E('한국어를 가르쳐 드릴까요?','가르쳐 드릴까요','要不要教你韓文呢？','한국어:韓國語'),
+      E('후배를 도와주고 싶어요.','도와주고','我想幫助學弟（妹）。','후배:後輩'),
+    ]},
+  ],
+},
+{
+  no:'26', title:'아 / 어 보다', meaning:'與動詞搭配使用：嘗試、經驗',
+  tip:'',
+  usages:[
+    {label:'有嘗試之意', ex:[
+      E('맛 있다고 해서 먹어 보니까 실망이에요.','먹어 보','聽說好吃所以吃看看，之後卻大失所望。','실망:失望'),
+      E('소원을 말해 보세요.','말해 보세요','請說出你的願望。','소원:所願'),
+      E('한국 음식을 한번 드셔 보세요.','드셔 보세요','請吃吃看韓國菜。','한국:韓國,음식:飲食,번:番'),
+      E('빨리 집에 가 보세요. 가족이 찾고 있어요.','가 보세요','請快點回家，你家人在找你。','가족:家族'),
+      E('우울해 보여요. 이럴 땐 맥주를 마셔 보세요.','마셔 보세요','你看起來很憂鬱，這時候請喝啤酒看看。','우울:憂鬱,맥주:麥酒'),
+      E('한국어 능력시험을 쳐 보니까 그다지 어렵지 않았어요.','쳐 보','考過韓文檢定考之後發現也沒那麼難啦。','한국어:韓國語,능력:能力,시험:試驗'),
+    ]},
+    {label:'曾經的經驗：動詞아／어 봤어요，語尾為過去式', rule:'相近詞：ㄴ／은 적이 있다、아／어 본 적이 있다', ex:[
+      E('한국에 가 보았는데 그때 정말 재미있게 놀았어요.','가 보았','我去過韓國，當時玩得很開心。','한국:韓國'),
+      E('한국어를 써 본 적이 있는데 그림 그리는 것 같아.','써 본 적','我寫過韓文，好像在畫畫。','한국어:韓國語'),
+      E('그대 이름을 불러 보았습니다.','불러 보았습니다','呼喊了你的名字。',''),
+    ]},
+  ],
+},
+{
+  no:'27', title:'아 / 어 보이다', meaning:'看起來。與形容詞搭配使用',
+  tip:'相近詞：게 보이다',
+  usages:[
+    {label:'看起來……', ex:[
+      E('요즘 얼굴이 많이 좋아 보여서 안심이 돼요.','좋아 보여','最近氣色看起來不錯，所以安心多了。','안심:安心'),
+      E('어려워 보이지만 꾸준히 하면 잘 할 수 있어요.','어려워 보이','雖然看起來很難，但只要堅持下去就會變厲害。',''),
+      E('이 의자가 편안해 보여요.','편안해 보여요','這椅子看起來很舒適。','의자:椅子,편안:便安'),
+    ]},
+  ],
+},
+{
+  no:'28', title:'아 / 어 버리다', meaning:'……光、……掉。表示已結束或無剩餘時使用',
+  tip:'',
+  tips:['常見用法：먹어 버리다（吃光）、마셔 버리다（喝光）、돈을 써 버리다（花光）、가 버리다（走掉）、떠나 버리다（離開）、잃어버리다（遺失）、잊어 버리다（忘記）、죽여 버리다（殺掉）、팔아 버리다（賣掉）、자 버리다（睡覺）、차 버리다（甩掉）、줘 버리다（給）、울어 버리다（哭了）、폭로해 버리다（爆料）、끝내 버리다（結束掉）'],
+  usages:[
+    {label:'……光、……掉', ex:[
+      E('너무 억울해서 그 자리에서 울어 버렸어요.','울어 버렸어요','因太冤枉所以當場就哭了。','억울:抑鬱'),
+      E('드디어 모든 리포트를 다 끝내 버렸어요.','끝내 버렸어요','終於把所有的報告做完了。',''),
+      E('지하철에서 지갑하고 핸드폰을 잃어버려서 짜증나요.','잃어버려서','在地下鐵遺失了錢包跟手機，真的很煩。','지하철:地下鐵,지갑:紙匣'),
+    ]},
+  ],
+},
+{
+  no:'29', title:'아 / 어 놓다', meaning:'結束某一狀態之後，持續維持此狀態時使用',
+  tip:'',
+  tips:['常見用法：써 놓다（寫好放著）、사 놓다（買好放著）、요리해 놓다（煮好放著）、정리해 놓다（先整理好）、닦아 놓다（先刷或擦好）、해 놓다（弄好放著）、먹어 놓다（先吃著）、먹여 놓다（先餵食）、만들어 놓다（做好放著）、그려 놓다（先畫好）、모아 놓다（儲存）'],
+  usages:[
+    {label:'「놓아、놓아서」可省略寫為「놔、놔서」', ex:[
+      E('나갈 거니까 먼저 불을 꺼 놔.','꺼 놔','我們要出門所以先關燈。',''),
+      E('밥을 다 차려 놓았으니까 빨리 와서 먹어.','차려 놓았','飯已經準備好了，快來吃。',''),
+      E('돈을 열심히 모아 놔서 유럽 여행 갈 거예요.','모아 놔','我要認真存錢後環遊歐洲。','열심:熱心,여행:旅行'),
+    ]},
+  ],
+},
+{
+  no:'30', title:'아 / 어지다', meaning:'產生變化。與形容詞搭配使用',
+  tip:'',
+  usages:[
+    {label:'使用於形容詞時，變……', ex:[
+      E('실력이 많이 좋아졌어요.','좋아졌어요','實力變強了。','실력:實力'),
+      E('얼굴이 점점 더 하얘졌으면 좋겠어요.','하얘졌','希望臉變得愈來愈白。','점점:漸漸'),
+      E('일을 한 후로 집안 사정이 나아졌어요.','나아졌어요','自從開始工作後，家裡的情況好轉了。','후:後,사정:事情'),
+      E('유월이네요. 날씨가 점점 더워지네요.','더워지네요','六月了，天氣愈來愈熱了。','유월:六月,점점:漸漸'),
+    ]},
+    {label:'如與動詞搭配使用時，意指動作順利進行', ex:[
+      E('역시 비싼 차는 잘 가진다.','가진다','不愧是貴的車，開得真順。','역시:亦是,차:車'),
+      E('종이에 잘 써지는 볼펜으로 주세요.','써지는','請給我很好寫的筆。',''),
+    ]},
+  ],
+},
+{
+  no:'31', title:'게 되다', meaning:'使用於動詞，事情順水推舟進行或是產生變化，「變……」',
+  tip:'使用方法：動詞게 되다',
+  usages:[
+    {label:'變得……、結果……', ex:[
+      E('다음 달에 한 달 동안 출장을 가게 됐어요.','가게 됐어요','下個月我要出差一個月。','출장:出張'),
+      E('그냥 결혼하게 될 것 같아요.','하게 될','我可能要結婚了。','결혼:結婚'),
+      E('우연히 길에서 만나게 되어서 같이 차 마셨어요.','만나게 되어서','在路上巧遇所以就一起喝了杯茶。','우연:偶然,차:茶'),
+      E('한국에 가게 되면 꼭 불고기를 먹어 봐.','가게 되','去韓國的話，一定要吃吃看銅盤烤肉。','한국:韓國'),
+    ]},
+  ],
+},
+{
+  no:'32', title:'고 싶다', meaning:'想',
+  tip:'使用方法：動詞／形容詞고 싶다',
+  usages:[
+    {label:'第一人稱或第二人稱時使用', ex:[
+      E('저는 지금 고기가 너무 먹고 싶어요.','먹고 싶어요','我現在好想吃肉。','지금:只今'),
+      E('나 피곤해. 빨리 집에 가고 싶은데.','가고 싶','我好累。想快點回家。','피곤:疲困'),
+      E('자기 결혼하고 싶어?','결혼하고 싶어','親愛的，你想結婚嗎？','결혼:結婚'),
+      E('보고 싶어요.','보고 싶어요','想你。／想看。',''),
+    ]},
+    {label:'고 싶어하다：適用於第三人稱', ex:[
+      E('국민들은 걱정없이 살고 싶어해요.','살고 싶어해요','百姓想過著無憂無慮的生活。','국민:國民'),
+      E('사람들은 행복해지고 싶어해요.','행복해지고 싶어해요','大家都想變得幸福。','행복:幸福'),
+      E('언니는 편안하게 자고 싶을 거예요.','자고 싶','姊姊應該想睡得安穩。','편안:便安'),
+    ]},
+  ],
+},
+{
+  no:'33', title:'기 싫다', meaning:'不想、不喜歡或討厭人、事、物',
+  tip:'使用方法：動詞／形容詞기 싫다\n相近詞：動詞／形容詞고 싶지 않다／안 動詞／形容詞고 싶다',
+  usages:[
+    {label:'第一人稱或第二人稱時使用', ex:[
+      E('전 정말 이 일을 하기 싫어요.','하기 싫어요','我真的不想做那件事情。（較直接的表達方式）',''),
+      E('전 정말 이 일을 하고 싶지 않아요.','하고 싶지 않아요','我真的不想做那件事情。（婉轉）',''),
+      E('전 정말 이 일을 안 하고 싶어요.','안 하고 싶어요','我真的不想做那件事情。',''),
+      E('먹기 싫어요. 그만 주세요.','먹기 싫어요','我不想吃，不要給我了。',''),
+    ], tips:['안 보고 싶어요：不想念或是不想看，而보기 싫어요單純意味不想看某樣事物或是不想見某人']},
+    {label:'기 싫어하다：適用於第三人稱', ex:[
+      E('그는 공포 영화를 보기 싫어해요.','보기 싫어해요','他不喜歡看恐怖片。','공포:恐怖,영화:映畫'),
+      E('세상 모든 사람들과 얘기하기 싫어해요.','얘기하기 싫어해요','他不想跟任何人講話。','세상:世上'),
+    ]},
+  ],
+},
+{
+  no:'34', title:'(으)면 좋겠다、았 / 었으면 좋겠다', meaning:'如能這樣那就太棒了或有委婉之意',
+  tip:'相近詞：고 싶다（想），較直接',
+  usages:[
+    {label:'如能……就太棒了', ex:[
+      E('가을에 한국에 가서 단풍을 봤으면 좋겠어요. = 가을에 한국에 가서 단풍을 보고 싶어요.','봤으면 좋겠어요|보고 싶어요','去韓國之後看到楓葉就太棒了。（我想去韓國看楓葉。）','한국:韓國,단풍:丹楓'),
+      E('배불리 먹었으면 좋겠지요?','먹었으면 좋겠지요','如果能吃飽就太棒了對吧？',''),
+      E('이 회사에 들어가면 너무 좋을 것 같아요.','들어가면|좋을 것 같아요','如果能進這家公司的話，應該很棒。','회사:會社'),
+    ]},
+  ],
+},
+{
+  no:'35', title:'는、ㄴ / 은、인 것 같다', meaning:'好像……。意指推測或宛轉的語氣',
+  tip:'相近詞：는 모양이다、는 듯하다',
+  tips:[
+    '現在式：動詞 는 것 같다｜形容詞 ㄴ／은 것 같다｜名詞 인 것 같다',
+    '過去式：動詞 ㄴ／은 것 같다｜形容詞 았／었던 것 같다｜名詞 이었／였던 것 같다',
+    '未來式：動詞 ㄹ／을 것 같다｜形容詞 ㄹ／을 것 같다｜名詞 일 것 같다',
+  ],
+  usages:[
+    {label:'好像……', ex:[
+      E('여기는 예전에 공장이었던 것 같아요.','공장이었던 것 같아요','這裡以前好像是工廠。','공장:工場'),
+      E('이렇게 입으면 예쁠 것 같은데.','예쁠 것 같은데','這樣穿應該很好看。',''),
+      E('이제 조금씩 죽을 먹는 것 같아서 다행이에요.','먹는 것 같아서','好像終於能吃點粥了，感到欣慰。','죽:粥,다행:多幸'),
+      E('참 살기 좋은 곳인 거 같아.','곳인 거 같아','這裡應該是很好的居處。',''),
+    ]},
+  ],
+},
+{
+  no:'36', title:'ㄹ / 을 수(가) 있다 / 없다', meaning:'能……／可以……、不能……；會……不會……',
+  tip:'',
+  usages:[
+    {label:'單純地表示當下是否能做到。能……／可以……、不能……／不可以……', ex:[
+      E('다리를 다쳐서 갈 수가 없어요.','갈 수가 없어요','因為腳受傷所以不能去。',''),
+      E('갑자기 위장이 아파요. 움직일 수가 없어요.','움직일 수가 없어요','胃突然好痛，所以動不了。','위장:胃腸'),
+      E('비누로 머리를 감을 수 있어요.','감을 수 있어요','可以用肥皂洗頭。',''),
+      E('눈빛만 봐도 알 수 있어요.','알 수 있어요','單憑眼神就能明白。',''),
+    ]},
+    {label:'與能力有關，會……不會……', ex:[
+      E('대만 사람이네요... 근데 한국어를 할 수 있어요?','할 수 있어요','你是台灣人啊……但是會說韓文？','대만:臺灣,한국어:韓國語'),
+      E('무슨 운동 할 수 있어요?','할 수 있어요','你會什麼運動？','운동:運動'),
+    ]},
+  ],
+},
+{
+  no:'37', title:'ㄹ / 을 줄 알다 / 모르다', meaning:'會……／不會……；早知道……、沒想到……；以為……',
+  tip:'',
+  usages:[
+    {label:'與能力有關。會……，或不會……。與動詞搭配使用', ex:[
+      E('한국어를 할 줄 아세요?','할 줄 아세요','A：您會說韓文嗎？','한국어:韓國語'),
+      E('네. 조금 해요. 6개월 전부터 한국어를 배우고 있어요.','','B：嗯，會一點點。從六個月前開始在學韓文。','개월:個月,전:前,한국어:韓國語'),
+      E('미성년자인 것 같은데 운전을 할 줄 알아요?','할 줄 알아요','看起來像未成年，你會開車呀？','미성년자:未成年者,운전:運轉'),
+      E('할 줄 아는 요리는 라면뿐이에요.','할 줄 아','我會煮的只有泡麵。','요리:料理'),
+    ]},
+    {label:'語尾使用過去式表示「早知道……，或沒想到……」', rule:'動詞／形容詞ㄹ／을 줄 알았다／몰랐다\n名詞일 줄 알았다／몰랐다', ex:[
+      E('저는 그가 일 등 할 줄 몰랐어요.','할 줄 몰랐어요','我沒想到他考第一。','일:一,등:等'),
+      E('저는 그 오빠가 제 언니의 남친일 줄 몰랐어요.','일 줄 몰랐어요','我沒想到那個哥哥是我姊姊的男朋友。','남친:男親'),
+      E('그가 일을 잘 해결할 줄 알았어요.','해결할 줄 알았어요','我早知道他會圓滿解決。','해결:解決'),
+    ]},
+    {label:'動詞／形容詞는／ㄴ／은 줄 알았다，有「以為」之意', ex:[
+      E('낮에 밖에 비가 온 줄 알았어요.','온 줄 알았어요','我以為白天有下雨。',''),
+      E('그 사실을 알고 있는 줄 알았어요.','알고 있는 줄 알았어요','我以為你知道那件事情。','사실:事實'),
+      E('내일 출장가는 줄 알았어요.','출장가는 줄 알았어요','我以為明天出差。','내일:來日,출장:出張'),
+      E('이미 나간 줄 알았어요.','나간 줄 알았어요','我以為你已經出門了。',''),
+    ]},
+  ],
+},
+];
+
+</script>
+<script>
+(function(){
+'use strict';
+
+/* ================= icons ================= */
+const I = {
+  home:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 10.5 12 4l8 6.5V19a1 1 0 0 1-1 1h-4.5v-5.5h-5V20H5a1 1 0 0 1-1-1z"/></svg>',
+  search:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4 4"/></svg>',
+  star:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.8 2.5 5.1 5.6.8-4 3.9.9 5.6-5-2.6-5 2.6.9-5.6-4-3.9 5.6-.8z"/></svg>',
+  starF:'<svg viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="m12 3.8 2.5 5.1 5.6.8-4 3.9.9 5.6-5-2.6-5 2.6.9-5.6-4-3.9 5.6-.8z"/></svg>',
+  cards:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><rect x="3.5" y="6.5" width="12" height="14" rx="2"/><path d="M8.5 6.5V5.5a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2h-3"/></svg>',
+  back:'<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 5-7 7 7 7"/></svg>',
+  chev:'<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 5 7 7-7 7"/></svg>',
+  speak:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9.5v5h3.5L12 18.5v-13L7.5 9.5z" fill="currentColor" fill-opacity=".15"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/></svg>',
+  play:'<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13l10.5-6.5z"/></svg>',
+  stop:'<svg viewBox="0 0 24 24" fill="currentColor"><rect x="7" y="7" width="10" height="10" rx="1.5"/></svg>',
+  check:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></svg>',
+  x:'<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  shuffle:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7h3.5c4.5 0 4.5 10 9 10H20M4 17h3.5c1.6 0 2.6-1.3 3.4-3M20 7h-3.5c-1.6 0-2.6 1.3-3.4 3M17.5 4.5 20 7l-2.5 2.5M17.5 14.5 20 17l-2.5 2.5"/></svg>',
+};
+
+/* ================= storage (per-viewer, optional) ================= */
+const LS = {
+  get(k,d){ try{ const v = localStorage.getItem('kgr:'+k); return v==null ? d : JSON.parse(v); }catch(e){ return d; } },
+  set(k,v){ try{ localStorage.setItem('kgr:'+k, JSON.stringify(v)); }catch(e){} }
+};
+const S = {
+  star: new Set(LS.get('star',[])),
+  done: new Set(LS.get('done',[])),
+  rate: LS.get('rate',0.8),
+  hideZh: LS.get('hideZh',false),
+  scope: LS.get('scope','all'),
+  last: LS.get('last',null),
+  favTab: 'star',
+  q: '',
+};
+const saveSets = ()=>{ LS.set('star',[...S.star]); LS.set('done',[...S.done]); };
+
+/* ================= data model ================= */
+const CATS = [
+  {key:'particle',  zh:'助詞',     ko:'조사',     glyph:'이', color:'var(--cat1)', data:PARTICLE},
+  {key:'negation',  zh:'否定詞',   ko:'부정어',   glyph:'안', color:'var(--cat2)', data:NEGATION},
+  {key:'connective',zh:'連接詞尾', ko:'연결어미', glyph:'고', color:'var(--cat3)', data:CONNECTIVE},
+  {key:'ending',    zh:'語尾',     ko:'어미',     glyph:'요', color:'var(--cat4)', data:ENDING},
+];
+const G = [];           // all grammars
+const GBY = {};         // id -> grammar
+const EX = [];          // all examples (flattened)
+CATS.forEach(c=>{
+  c.items = [];
+  const src = c.data ? c.data.map(g=>Object.assign({ready:true},g))
+                     : c.index.map(([no,title,meaning])=>({no,title,meaning,ready:false,usages:[]}));
+  src.forEach(g=>{
+    g.id = c.key+'-'+g.no; g.cat = c;
+    g.exIdx = [];
+    // merge label-less continuation blocks into the previous usage
+    const us = [];
+    (g.usages||[]).forEach(u=>{
+      if(u.cont && !u.label && us.length){ const p=us[us.length-1]; p.ex = p.ex.concat(u.ex); if(u.tips) p.tips=(p.tips||[]).concat(u.tips); }
+      else us.push(Object.assign({}, u, {ex:u.ex.slice()}));
+    });
+    g.usages = us;
+    let n=0;
+    us.forEach(u=>{ if(!u.cont) n++; u.n = n;
+      u.ex.forEach(e=>{ e.i = EX.length; e.g = g; e.u = u; EX.push(e); g.exIdx.push(e.i); });
+    });
+    c.items.push(g); G.push(g); GBY[g.id]=g;
+  });
+  c.ready = c.items.filter(g=>g.ready).length;
+});
+
+/* ================= helpers ================= */
+const $ = s=>document.querySelector(s);
+const esc = s=>String(s).replace(/[&<>"']/g, ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+const view = $('#view'), hdrIn = $('#hdrIn');
+function markKo(ko, hls){
+  const rs=[];
+  (hls||[]).forEach(h=>{
+    let i = ko.indexOf(h);
+    while(i>=0 && rs.some(r=>i<r[1] && i+h.length>r[0])) i = ko.indexOf(h, i+1);
+    if(i>=0) rs.push([i, i+h.length]);
+  });
+  rs.sort((a,b)=>a[0]-b[0]);
+  let out='', p=0;
+  rs.forEach(([a,b])=>{ out += esc(ko.slice(p,a)) + '<mark class="hl">' + esc(ko.slice(a,b)) + '</mark>'; p=b; });
+  return out + esc(ko.slice(p));
+}
+function markQ(text, q){
+  if(!q) return esc(text);
+  const lo = text.toLowerCase(), ql = q.toLowerCase();
+  let out='', p=0, i=lo.indexOf(ql);
+  while(i>=0){ out += esc(text.slice(p,i)) + '<mark class="q">' + esc(text.slice(i,i+q.length)) + '</mark>'; p=i+q.length; i=lo.indexOf(ql,p); }
+  return out + esc(text.slice(p));
+}
+const hjHtml = e => e.hj.length ? '<div class="ex-hj">'+e.hj.map(([w,c])=>'<span class="hj"><span class="w">'+esc(w)+'</span><span class="c">'+esc(c)+'</span></span>').join('')+'</div>' : '';
+let toastT;
+function toast(msg){ const t=$('#toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(toastT); toastT=setTimeout(()=>t.classList.remove('show'),1800); }
+const doneCount = c => c.items.filter(g=>S.done.has(g.id)).length;
+const pct = (a,b)=> b ? Math.round(a/b*100) : 0;
+
+/* ================= speech ================= */
+const TTS = {
+  ok: 'speechSynthesis' in window && 'SpeechSynthesisUtterance' in window,
+  voice:null, loaded:false, missing:false, cur:null, queue:null,
+  init(){
+    if(!this.ok) return;
+    const load=()=>{
+      let vs=[]; try{ vs = speechSynthesis.getVoices()||[]; }catch(e){}
+      if(vs.length){
+        this.loaded = true;
+        this.voice = vs.find(v=>/^ko([-_]|$)/i.test(v.lang) && /google/i.test(v.name)) || vs.find(v=>/^ko([-_]|$)/i.test(v.lang)) || null;
+        this.missing = !this.voice;
+        document.querySelectorAll('[data-voice-hint]').forEach(el=>el.hidden = !this.missing);
+      }
+    };
+    load();
+    try{ speechSynthesis.addEventListener('voiceschanged', load); }catch(e){ speechSynthesis.onvoiceschanged = load; }
+    setTimeout(load, 700); setTimeout(load, 2000);
+  },
+  clean(t){ return t.replace(/\s*=\s*/g,'. ').replace(/\//g,', ').replace(/[()~]/g,' ').replace(/\.{2,}/g,'…'); },
+  speak(text, onend){
+    if(!this.ok){ toast('這個瀏覽器不支援朗讀'); onend&&onend(); return; }
+    try{ speechSynthesis.cancel(); }catch(e){}
+    const u = new SpeechSynthesisUtterance(this.clean(text));
+    u.lang = 'ko-KR'; if(this.voice) u.voice = this.voice; u.rate = S.rate; u.pitch = 1;
+    this.cur = u;
+    const fin = ()=>{ if(this.cur!==u) return; this.cur=null; onend&&onend(); };
+    u.onend = fin;
+    u.onerror = (ev)=>{ if(ev && ev.error && !/interrupt|cancel/.test(ev.error) && !this.voice){ this.missing=true; document.querySelectorAll('[data-voice-hint]').forEach(el=>el.hidden=false); } fin(); };
+    setTimeout(()=>{ if(this.cur===u) try{ speechSynthesis.speak(u); }catch(e){ fin(); } }, 40);
+  },
+  stop(){ this.queue=null; this.cur=null; if(this.ok) try{ speechSynthesis.cancel(); }catch(e){} setSpeaking(null); updatePlayBtn(); }
+};
+function setSpeaking(row){ document.querySelectorAll('.ex.speaking').forEach(r=>r.classList.remove('speaking')); if(row) row.classList.add('speaking'); }
+const reduceMotion = ()=> window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+function speakRow(row){
+  TTS.queue = null; updatePlayBtn();
+  const e = EX[+row.dataset.ex];
+  setSpeaking(row);
+  TTS.speak(e.ko, ()=>setSpeaking(null));
+}
+function playAll(){
+  if(TTS.queue){ TTS.stop(); return; }
+  const rows = [...view.querySelectorAll('.ex[data-ex]:not(.bad)')];
+  if(!rows.length) return;
+  const q = {rows, i:0}; TTS.queue = q;
+  const step = ()=>{
+    if(TTS.queue!==q) return;
+    if(q.i>=q.rows.length){ TTS.queue=null; setSpeaking(null); updatePlayBtn(); return; }
+    const row = q.rows[q.i]; setSpeaking(row);
+    row.scrollIntoView({block:'center', behavior: reduceMotion()?'auto':'smooth'});
+    TTS.speak(EX[+row.dataset.ex].ko, ()=>{ if(TTS.queue!==q) return; q.i++; setTimeout(step, 500); });
+  };
+  updatePlayBtn(); step();
+}
+function updatePlayBtn(){
+  const b = view.querySelector('.play-all'); if(!b) return;
+  b.innerHTML = TTS.queue ? I.stop+'停止' : I.play+'全部播放';
+  b.setAttribute('aria-pressed', TTS.queue?'true':'false');
+}
+const voiceHint = ()=> `<details class="voice-hint" data-voice-hint ${TTS.missing?'':'hidden'}>
+  <summary>找不到韓文語音，點這裡看怎麼安裝</summary>
+  <ol>
+    <li><b>iPhone / iPad：</b>設定 → 輔助使用 → 朗讀內容 → 聲音 → 韓文，下載一個語音（例如 Yuna）。</li>
+    <li><b>Android：</b>設定 → 系統 → 語言與輸入法 → 文字轉語音輸出 → Google 語音服務 → 安裝語音資料 → 韓文。（各品牌選單名稱略有不同）</li>
+    <li>裝好後重新開啟這個頁面。</li>
+  </ol>
+</details>`;
+
+/* ================= routing ================= */
+let route = {name:'home'};
+let stack = [];
+const scrollMem = {};
+const rkey = r => r.name+':'+(r.id||r.cat||'');
+function go(r, opts={}){
+  TTS.stop();
+  scrollMem[rkey(route)] = window.scrollY;
+  if(opts.reset) stack = [];
+  else if(!opts.back) stack.push(route);
+  route = r;
+  render();
+  const y = opts.back ? (scrollMem[rkey(r)]||0) : 0;
+  window.scrollTo(0, y);
+  if(opts.focusEx!=null){
+    const el = view.querySelector('.ex[data-ex="'+opts.focusEx+'"]');
+    if(el){ if(S.hideZh) el.classList.add('revealed'); requestAnimationFrame(()=>{ el.scrollIntoView({block:'center'}); el.classList.add('flash'); }); }
+  }
+}
+function back(){ const r = stack.pop(); if(r) go(r,{back:true}); else go({name:'home'},{reset:true}); }
+const tabOf = r => r.tab || ({search:'search', fav:'fav', review:'review'}[r.name]) || 'home';
+
+function renderTabs(){
+  const t = tabOf(route);
+  const tabs = [['home','首頁',I.home],['search','搜尋',I.search],['fav','收藏',I.star],['review','隨機複習',I.shuffle]];
+  $('#tabsIn').innerHTML = tabs.map(([k,l,ic])=>`<button class="tab ${t===k?'on':''}" data-tab="${k}" aria-current="${t===k?'page':'false'}">${ic}<span>${l}</span></button>`).join('');
+}
+function header(title, sub, opts={}){
+  hdrIn.innerHTML =
+    (opts.back ? `<button class="icon-btn" data-act="back" aria-label="返回">${I.back}</button>` : '') +
+    `<div class="hdr-title">${title}${sub?`<span class="hdr-sub">${sub}</span>`:''}</div>` +
+    (opts.right||'');
+}
+
+/* ================= views ================= */
+function render(){
+  renderTabs();
+  ({home:vHome, list:vList, detail:vDetail, search:vSearch, fav:vFav, review:vReview})[route.name]();
+  onScroll();
+}
+
+function vHome(){
+  header('韓檢初級文法', '<span class="ko">TOPIK I</span>');
+  const total = G.length, done = S.done.size, readyEx = EX.length;
+  const last = S.last && GBY[S.last];
+  view.innerHTML = `
+  <section class="hero">
+    <div class="eyebrow">初級必備文法 · PART 3</div>
+    <h1>今天複習哪一類？</h1>
+    <div class="ko-sub">한국어능력시험 초급 문법</div>
+    <div class="overall">
+      <div class="overall-row">
+        <div><div class="big-num">${done}<small>/ ${total} 已熟記</small></div></div>
+        <div class="mini-stats"><span>收藏 <b>${S.star.size}</b></span><span>例句 <b>${readyEx}</b></span></div>
+      </div>
+      <div class="bar" aria-label="熟記進度 ${pct(done,total)}%"><i style="width:${pct(done,total)}%"></i></div>
+    </div>
+    ${last ? `<button class="resume" data-go="${last.id}"><span>繼續上次</span><b>${esc(last.cat.zh)} ${last.no}</b><span class="ko">${esc(last.title)}</span>${I.chev}</button>` : ''}
+  </section>
+  <div class="sec-label">四大分類</div>
+  <div class="cats">
+    ${CATS.map(c=>{
+      const d = doneCount(c);
+      return `<button class="cat" style="background:${c.color}" data-cat="${c.key}">
+        <span class="glyph" aria-hidden="true">${c.glyph}</span>
+        <span class="cat-ko">${c.ko}</span>
+        <span class="cat-zh">${c.zh}</span>
+        ${c.ready ? '' : '<span class="pill">例句整理中</span>'}
+        <span class="cat-count">${c.items.length} 個文法 · 已熟記 ${d}</span>
+        <span class="bar"><i style="width:${pct(d,c.items.length)}%"></i></span>
+      </button>`;
+    }).join('')}
+  </div>`;
+}
+
+function rowHtml(g, withCat){
+  const st = (S.star.has(g.id)?I.starF:'') + (S.done.has(g.id)?I.check:'');
+  return `<button class="row ${g.ready?'':'pending'} ${S.done.has(g.id)?'done':''}" data-go="${g.id}">
+    <span class="stamp"><span>文法</span><b>${g.no}</b></span>
+    <span class="row-main">
+      ${withCat?`<span class="row-cat">${g.cat.zh}</span>`:''}
+      <span class="row-title ko">${esc(g.title)}</span>
+      <span class="row-mean">${g.meaning?esc(g.meaning):(g.ready?'':'例句整理中')}</span>
+    </span>
+    <span class="row-state" aria-label="${S.star.has(g.id)?'已收藏 ':''}${S.done.has(g.id)?'已熟記':''}">${st}</span>
+  </button>`;
+}
+
+function vList(){
+  const c = CATS.find(x=>x.key===route.cat);
+  header(c.zh, `<span class="ko">${c.ko}</span>`, {back:true});
+  view.innerHTML = `
+  <div class="list-head">
+    <h1>${c.zh} <span class="ko" style="color:var(--muted);font-weight:500;font-size:18px">${c.ko}</span></h1>
+    <p>${c.items.length} 個文法 · 已熟記 ${doneCount(c)}${c.ready?'':' · 例句整理中'}</p>
+  </div>
+  <div class="rows">${c.items.map(g=>rowHtml(g)).join('')}</div>`;
+}
+
+function vDetail(){
+  const g = GBY[route.id];
+  if(g.ready){ S.last = g.id; LS.set('last', g.id); }
+  const starOn = S.star.has(g.id), doneOn = S.done.has(g.id);
+  header(`${g.cat.zh} · 文法 ${g.no}`, '', {back:true,
+    right:`<button class="icon-btn ${starOn?'on':''}" data-act="star" aria-label="${starOn?'取消收藏':'收藏'}" aria-pressed="${starOn}">${starOn?I.starF:I.star}</button>`});
+  const items = g.cat.items, idx = items.indexOf(g), prev = items[idx-1], next = items[idx+1];
+  const ruleHtml = t => `<div class="rule"><span class="rule-tag">訣竅</span><span class="rule-text">${esc(t).replace(/\n/g,'<br>')}</span></div>`;
+  const tipHtml = tips => tips && tips.length ? `<div class="tipbox"><span class="tip-tag">Tip!</span><ul>${tips.map(t=>`<li>${esc(t)}</li>`).join('')}</ul></div>` : '';
+  let body = '';
+  if(g.ready){
+    body += `<div class="toolbar">
+      <button class="play-all" data-act="playall" aria-pressed="false">${I.play}全部播放</button>
+      <div class="seg" role="group" aria-label="語速">
+        ${[[0.6,'慢'],[0.8,'中'],[1,'正常']].map(([r,l])=>`<button data-rate="${r}" class="${S.rate==r?'on':''}" aria-pressed="${S.rate==r}">${l}</button>`).join('')}
+      </div>
+      <button class="hide-zh ${S.hideZh?'on':''}" data-act="hidezh" aria-pressed="${S.hideZh}"><span>隱藏翻譯</span><span class="switch"></span></button>
+    </div>`;
+    body += voiceHint();
+    body += `<div class="${S.hideZh?'hidezh':''}" id="exWrap">` + g.usages.map(u=>`
+      <section class="usage ${u.cont?'cont':''}">
+        ${u.label ? `<h2 class="usage-h">${u.cont?'':`<span class="num">${u.n}</span>`}<span class="txt">${esc(u.label)}</span></h2>` : ''}
+        ${u.rule ? ruleHtml(u.rule) : ''}
+        ${tipHtml(u.tips)}
+        ${u.ex.length ? `<ol class="exs">${u.ex.map(e=>`
+          <li class="ex ${e.bad?'bad':''}" data-ex="${e.i}">
+            <div class="ex-body" data-act="reveal">
+              ${e.bad?'<span class="bad-tag">✕ 錯誤用法</span>':''}
+              <p class="ex-ko ko" lang="ko">${markKo(e.ko, e.hl)}</p>
+              <p class="ex-zh">${esc(e.zh)}</p>
+              ${hjHtml(e)}
+              ${e.note?`<div class="ex-note">${esc(e.note)}</div>`:''}
+              <div class="peek">點一下看翻譯</div>
+            </div>
+            ${e.bad?'':`<button class="say" data-act="say" aria-label="朗讀這句">${I.speak}</button>`}
+          </li>`).join('')}</ol>` : ''}
+      </section>`).join('') + `</div>`;
+  } else {
+    body += `<div class="pending-note"><span class="big ko">${esc(g.title)}</span>這個文法的例句還在整理中。<br>確認「助詞」的格式和畫面沒問題後，就會照書上內容補上。</div>`;
+  }
+  view.innerHTML = `
+  <section class="g-head">
+    <div class="g-meta"><span class="stamp">文法 <b>${g.no}</b></span><span class="chip">${g.cat.zh} <span class="ko">${g.cat.ko}</span></span></div>
+    <h1 class="g-title ko" lang="ko">${esc(g.title)}</h1>
+    ${g.meaning?`<p class="g-meaning">${esc(g.meaning)}</p>`:''}
+    <div class="g-actions">
+      <button class="toggle ${starOn?'on':''}" data-act="star" aria-pressed="${starOn}">${starOn?I.starF:I.star}${starOn?'已收藏':'收藏'}</button>
+      <button class="toggle ${doneOn?'on':''}" data-act="done" aria-pressed="${doneOn}">${I.check}${doneOn?'已熟記':'標記熟記'}</button>
+    </div>
+  </section>
+  ${g.tip ? ruleHtml(g.tip) : ''}
+  ${tipHtml(g.tips)}
+  ${body}
+  <div class="g-foot">
+    ${g.ready?`<button class="done-btn ${doneOn?'on':''}" data-act="done" aria-pressed="${doneOn}">${I.check}${doneOn?'已熟記這個文法':'我記住這個文法了'}</button>`:''}
+    <div class="pn">
+      <button data-go="${prev?prev.id:''}" ${prev?'':'disabled'}><small>上一個</small><span class="ko">${prev?esc(prev.title):''}</span></button>
+      <button data-go="${next?next.id:''}" ${next?'':'disabled'}><small>下一個</small><span class="ko">${next?esc(next.title):''}</span></button>
+    </div>
+  </div>`;
+}
+
+function vSearch(){
+  header('搜尋', '');
+  view.innerHTML = `
+  <div class="search-box">
+    <label class="search-field" for="q">${I.search}
+      <input id="q" type="search" inputmode="search" autocomplete="off" placeholder="輸入韓文或中文，例如 에서、醫院" value="${esc(S.q)}" aria-label="搜尋文法與例句">
+      <button class="clear-q" data-act="clearq" aria-label="清除" ${S.q?'':'hidden'}>${I.x}</button>
+    </label>
+  </div>
+  <div id="results"></div>`;
+  const inp = $('#q');
+  let t; inp.addEventListener('input', ()=>{ clearTimeout(t); t=setTimeout(()=>{ S.q = inp.value.trim(); $('.clear-q').hidden=!S.q; renderResults(); }, 120); });
+  renderResults();
+}
+function renderResults(){
+  const box = $('#results'); if(!box) return;
+  const q = S.q;
+  if(!q){
+    box.innerHTML = `<div class="res-h">試試看</div><div class="suggest">${['에서','까지','比起','一起','病院','아파요','만'].map(s=>`<button data-q="${esc(s)}">${esc(s)}</button>`).join('')}</div>`;
+    return;
+  }
+  const ql = q.toLowerCase();
+  const gs = G.filter(g=>(g.title+' '+g.meaning+' '+g.cat.zh).toLowerCase().includes(ql));
+  const es = EX.filter(e=>(e.ko+' '+e.zh+' '+e.hj.map(x=>x.join(' ')).join(' ')).toLowerCase().includes(ql));
+  if(!gs.length && !es.length){ box.innerHTML = `<div class="empty">找不到「${esc(q)}」<br>換個關鍵字，或只輸入一部分試試。</div>`; return; }
+  box.innerHTML =
+    (gs.length?`<div class="res-h">文法 ${gs.length}</div><div class="rows">${gs.map(g=>rowHtml(g,true)).join('')}</div>`:'') +
+    (es.length?`<div class="res-h">例句 ${es.length}${es.length>60?'（顯示前 60 句）':''}</div>` + es.slice(0,60).map(e=>`
+      <button class="hit" data-go="${e.g.id}" data-ex="${e.i}">
+        <div class="ko" lang="ko">${markQ(e.ko,q)}</div>
+        <div class="zh">${markQ(e.zh,q)}</div>
+        <div class="from">${e.g.cat.zh} ${e.g.no} · <span class="ko">${esc(e.g.title)}</span></div>
+      </button>`).join(''):'');
+}
+
+function vFav(){
+  header('我的收藏', '');
+  const list = G.filter(g=> S.favTab==='star' ? S.star.has(g.id) : S.done.has(g.id));
+  view.innerHTML = `
+  <div class="segwide" role="tablist">
+    <button role="tab" data-fav="star" class="${S.favTab==='star'?'on':''}" aria-selected="${S.favTab==='star'}">收藏 ${S.star.size}</button>
+    <button role="tab" data-fav="done" class="${S.favTab==='done'?'on':''}" aria-selected="${S.favTab==='done'}">已熟記 ${S.done.size}</button>
+  </div>
+  ${list.length ? `<div class="rows">${list.map(g=>rowHtml(g,true)).join('')}</div>`
+   : `<div class="empty">${S.favTab==='star'?'還沒有收藏的文法。<br>在文法頁右上角點星星，就會出現在這裡。':'還沒有標記熟記的文法。<br>複習完一個文法，點「我記住這個文法了」。'}</div>`}`;
+}
+
+let card = null, cardCount = 0;
+function pool(){ return EX.filter(e=> !e.bad && (S.scope==='all' || e.g.cat.key===S.scope)); }
+function drawCard(){
+  const p = pool(); if(!p.length){ card=null; return; }
+  let n; do{ n = p[Math.floor(Math.random()*p.length)]; }while(p.length>1 && card && n===card);
+  card = n; cardCount++;
+}
+function vReview(){
+  header('隨機複習', '');
+  if(!CATS.some(c=>c.key===S.scope && c.ready) && S.scope!=='all') S.scope='all';
+  if(!card || (S.scope!=='all' && card.g.cat.key!==S.scope)) drawCard();
+  const e = card;
+  view.innerHTML = `
+  <div class="scope" role="group" aria-label="複習範圍">
+    <button data-scope="all" class="${S.scope==='all'?'on':''}">全部</button>
+    ${CATS.map(c=>`<button data-scope="${c.key}" class="${S.scope===c.key?'on':''}" ${c.ready?'':'disabled'}>${c.zh}${c.ready?'':'（整理中）'}</button>`).join('')}
+  </div>
+  ${voiceHint()}
+  ${e ? `
+  <div class="flash-card" id="fc" data-act="flip" role="button" tabindex="0" aria-label="翻面看答案">
+    <div class="fc-top"><span class="fc-count">第 ${cardCount} 張 · 共 ${pool().length} 句</span>
+      <button class="say" data-act="saycard" aria-label="朗讀這句">${I.speak}</button></div>
+    <p class="fc-ko ko" lang="ko">${markKo(e.ko,e.hl)}</p>
+    <div class="fc-hint">點卡片看翻譯</div>
+    <div class="fc-back">
+      <div class="fc-zh">${esc(e.zh)}</div>
+      ${hjHtml(e)}
+      <div class="fc-g"><span class="stamp">文法 <b>${e.g.no}</b></span><span>${e.g.cat.zh}</span><span class="ko">${esc(e.g.title)}</span></div>
+      ${e.u.label?`<div class="fc-usage">${esc(e.u.label)}</div>`:''}
+    </div>
+  </div>
+  <div class="fc-actions">
+    <button class="btn ghost" data-go="${e.g.id}" data-ex="${e.i}">看這個文法</button>
+    <button class="btn primary" data-act="next">${I.shuffle}下一句</button>
+  </div>` : `<div class="empty">這個範圍還沒有例句。</div>`}`;
+}
+
+/* ================= events ================= */
+document.addEventListener('click', ev=>{
+  const t = ev.target.closest('button,[data-act],[data-go]');
+  if(!t) return;
+  if(t.dataset.tab){ const k=t.dataset.tab; go({name:k}, {reset:true}); return; }
+  if(t.dataset.cat){ go({name:'list', cat:t.dataset.cat, tab:'home'}); return; }
+  if(t.dataset.q!=null){ S.q=t.dataset.q; const i=$('#q'); if(i){ i.value=S.q; } $('.clear-q').hidden=false; renderResults(); return; }
+  if(t.dataset.fav){ S.favTab=t.dataset.fav; vFav(); return; }
+  if(t.dataset.scope){ if(t.disabled) return; S.scope=t.dataset.scope; LS.set('scope',S.scope); card=null; TTS.stop(); vReview(); return; }
+  if(t.dataset.rate){ S.rate=+t.dataset.rate; LS.set('rate',S.rate); view.querySelectorAll('[data-rate]').forEach(b=>{ const on = +b.dataset.rate===S.rate; b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); }); return; }
+  if(t.dataset.go!=null && t.dataset.go!==''){
+    const fx = t.dataset.ex!=null ? +t.dataset.ex : null;
+    go({name:'detail', id:t.dataset.go, tab:tabOf(route)}, {focusEx:fx});
+    return;
+  }
+  const a = t.dataset.act;
+  if(!a) return;
+  if(a==='back') back();
+  else if(a==='say'){ ev.stopPropagation(); speakRow(t.closest('.ex')); }
+  else if(a==='reveal'){ if(S.hideZh) t.closest('.ex').classList.toggle('revealed'); }
+  else if(a==='playall') playAll();
+  else if(a==='hidezh'){
+    S.hideZh=!S.hideZh; LS.set('hideZh',S.hideZh);
+    t.classList.toggle('on',S.hideZh); t.setAttribute('aria-pressed',S.hideZh);
+    const w=$('#exWrap'); if(w){ w.classList.toggle('hidezh',S.hideZh); w.querySelectorAll('.revealed').forEach(x=>x.classList.remove('revealed')); }
+  }
+  else if(a==='star'||a==='done'){
+    const g = GBY[route.id], set = a==='star'?S.star:S.done;
+    if(set.has(g.id)) set.delete(g.id); else set.add(g.id);
+    saveSets();
+    const y = window.scrollY; const playing = !!TTS.queue;
+    if(!playing){ vDetail(); window.scrollTo(0,y); }
+    else { // keep playback: just refresh the buttons
+      view.querySelectorAll(`[data-act="${a}"]`).forEach(b=>{ const on=set.has(g.id); b.classList.toggle('on',on); b.setAttribute('aria-pressed',on); });
+      hdrIn.querySelectorAll('[data-act="star"]').forEach(b=>{ const on=S.star.has(g.id); b.classList.toggle('on',on); b.innerHTML=on?I.starF:I.star; });
+    }
+    toast(a==='star' ? (S.star.has(g.id)?'已加入收藏':'已取消收藏') : (S.done.has(g.id)?'已標記為熟記':'已取消熟記'));
+  }
+  else if(a==='clearq'){ S.q=''; const i=$('#q'); i.value=''; i.focus(); t.hidden=true; renderResults(); }
+  else if(a==='flip'){ $('#fc').classList.toggle('flipped'); }
+  else if(a==='saycard'){ ev.stopPropagation(); const s=t.closest('.flash-card'); TTS.speak(card.ko, ()=>{}); }
+  else if(a==='next'){ drawCard(); vReview(); if(card) TTS.speak(card.ko, ()=>{}); }
+});
+document.addEventListener('keydown', ev=>{
+  if((ev.key==='Enter'||ev.key===' ') && ev.target.id==='fc'){ ev.preventDefault(); ev.target.classList.toggle('flipped'); }
+});
+function onScroll(){ $('#hdr').classList.toggle('scrolled', window.scrollY>4); }
+window.addEventListener('scroll', onScroll, {passive:true});
+
+TTS.init();
+render();
+})();
+</script>
+</body>
+</html>
